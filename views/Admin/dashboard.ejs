@@ -21,6 +21,11 @@
   margin-top: 25px;
   
  }
+ .option{
+
+  margin-top: 15px;
+ }
+
 }
 </style>
 
@@ -70,13 +75,21 @@
 
     <!-- ----------------------------Sales-------------------------- -->
     <form action="sort_sales_report" method="post">
-      <div class="contaniner mt-5 mb-5">
+      <div class="contaniner  mt-5 mb-5">
+        <h5 class="my-3 text-bold">DOWNLOAD SALES REPORT</h5>
       <div class="row">
         <div class="col">
-          <input type="month" class="form-control"  name="from" required>
+          <input type="date" class="form-control"  name="from" required>
         </div>
         <div class="col">
-          <input type="month" class="form-control"  name="to" required>
+          <input type="date" class="form-control"  name="to" required>
+        </div> 
+        <div class="col option">
+          <select class="form-control" id="format" name="type">
+            <option value="pdf">PDF</option>
+            <option value="excel">EXCEL</option>
+            <option value="csv">CSV</optIon>
+          </select>
         </div> 
         <div class=" col-sm-2 download">
           <button class=" btn btn-outline-success btn-sm"  >download</button>
@@ -88,9 +101,15 @@
     <div class="row">
         <div class="col-xl-6">
             <div class="card mb-4">
-                <div class="card-header">
-                    <i class="fas fa-chart-area me-1"></i>
-                    Bar Chart 
+                <div class="card-header d-flex justify-content-between">
+                  <%let date = new Date().getFullYear();%>
+                  
+                    <span class="">Bar Revenue Chart of <%=year%> </span>
+                    <form action="" method="post">
+                     <span class="mx-3"> Enter the year: <input type="number" placeholder="YYYY" min="1999" max="<%=date%>" name="year" value="<%=date%>">
+                      <button class="btn-sm border border-0  " style="background: #e1dfdf;">submit</button>
+                     </form>
+                   <span>
                 </div>
                 <div class="card-body"><canvas id="myBarChart" width="100%" height="60"></canvas></div>
             </div>

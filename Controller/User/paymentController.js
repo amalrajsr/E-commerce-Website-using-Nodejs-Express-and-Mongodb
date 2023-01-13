@@ -252,45 +252,57 @@ const failure= async(req,res)=>{
 
 const test=async (req,res)=>{
 
-    const userStatus= await userActive(req.cookies.jwt, req.cookies.id);
-    let cartWishlist= await cartAndWishlist(req.cookies.id)
+//     const userStatus= await userActive(req.cookies.jwt, req.cookies.id);
+//     let cartWishlist= await cartAndWishlist(req.cookies.id)
 
-  async function cartlength(userId){
-      const cartItemCount= await cartCollection.findOne({user:userId})
-      let product,productQty,j=0 ,outOfStock=[]
-      for(i=0;i<cartItemCount.cart_items.length;i++){
+//   async function cartlength(userId){
+//       const cartItemCount= await cartCollection.findOne({user:userId})
+//       let product,productQty,j=0 ,outOfStock=[]
+//       for(i=0;i<cartItemCount.cart_items.length;i++){
   
-        cartItemCount.cart_items.forEach(async function(cart){
+//         cartItemCount.cart_items.forEach(async function(cart){
   
-           product= await productCollection.findOne({_id:cart.product})
+//            product= await productCollection.findOne({_id:cart.product})
              
-           const qtyChck= await cartCollection.aggregate([{$match:{user:mongoose.Types.ObjectId(userId)}},
-            {$unwind:"$cart_items"},
-            {$match:{"cart_items.product":mongoose.Types.ObjectId(cart.product)}},
-])
+//            const qtyChck= await cartCollection.aggregate([{$match:{user:mongoose.Types.ObjectId(userId)}},
+//             {$unwind:"$cart_items"},
+//             {$match:{"cart_items.product":mongoose.Types.ObjectId(cart.product)}},
+// ])
 
-             productQty= qtyChck[0].cart_items.quantity
+//              productQty= qtyChck[0].cart_items.quantity
                 
-                   if(productQty>product.stock){
+//                    if(productQty>product.stock){
                     
-                     console.log('out of stock');
-                    outOfStock[j]=product.name
+//                      console.log('out of stock');
+//                     outOfStock[j]=product.name
                     
-                    j++
+//                     j++
   
-                   }
+//                    }
     
-        })
+//         })
 
-      }
-      return outOfStock
+//       }
+//       return outOfStock
 
-    }
+//     }
   
-  let stockCheck= await cartlength(req.cookies.id)
-console.log(1);
-  console.log(stockCheck);
+//   let stockCheck= await cartlength(req.cookies.id)
+// console.log(1);
+//   console.log(stockCheck);
     
+let salesDate= req.session.sale
+console.log(salesDate);
+    const total_price=await orderCollection.aggregate([{$match:{$and:[{status:"delivered"},{DeliveredDate:{$gt:salesDate.from,$lt:salesDate.to}}]}},{$group:{_id:null,total:{$sum:'$total_price'}}}])
+    
+    const productData= await orderCollection.aggregate([
+        {$match:{$and:[{status:"delivered"},{DeliveredDate:{$gt:salesDate.from,$lt:salesDate.to}}]}},
+        {$lookup:{from:'products',localField:"order_details.product",foreignField:"_id",as:"order_details.product"}},
+        {$lookup:{from:'users',localField:"user",foreignField:"_id",as:"user"}},
+        {$unwind:"$user"}])
+
+        console.log(productData);
+
     res.render('../views/User1/Order/test.ejs',{userStatus,cartWishlist})
 }
 module.exports={

@@ -29,12 +29,15 @@
                 </ul>
               </div>
             </div>
-            <div class="col-md-6">
-            <div class="card mb-3 ">
-              <div class="card-body profile ">
-                <% if(address) {%> 
+            <div class="mx-1 col-md-7 pb-3 row" style="border: 1px solid rgba(0, 0, 0, 0.125)">
+              <div class=" w-100  my-2 py-2" >
+<div class="w-25 mx-auto text-center border py-2">
+  <a href="/add_address" class=""><i class="fa fa-plus fa-md "></i></a>  
+</div>
+              </div>
+              <% if(address) {%> 
                 <% address.forEach(function(address){ %> 
-                  <div class="card mt-3 " style="width: 18rem">
+                  <div class="card text mx-2 mt-3 " style="width: 18rem">
                     <div class="card-body">
                       <h6 class="card-title">Name: <%=address.name%> </h6>
                       <h6 class="card-subtitle mb-2 text-muted">Phone: <%=address.mobile%> </h6>
@@ -47,14 +50,10 @@
                       <a href="delete_address?id=<%=address._id%>"  class="border border-0 bg-transparent"><i class="fa fa-trash fa-md text-dark "></i></a>
         
                     </div>
-                  </div>
+          </div>
+
                   <% }) }%> 
-                  <div class="card text-dark bg-light mb-3 mt-3 border border-dashed" style="max-width: 18rem;">
-                    
-                    <div class="card-body d-flex justify-content-center align-items-center">             
-                      <p class="card-text"> <a href="/add_address" class="text-dark"><i class="fa fa-plus fa-md "></i></a></p>
-                    </div>
-                  </div>
+                  
                 <!-- <div class="row  mb-4 address-container ms-3 ">
                   
                     <div class="col-sm-12 text-secondary address d-flex justify-content-center align-items-center ">
@@ -62,9 +61,7 @@
                   </div>
                   
               </div> -->
-            </div>
         
-          </div>
         </div>
             </div>
 

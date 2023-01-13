@@ -59,27 +59,33 @@ const adminHome =async (req, res) => {
             
  
        const  orderPending= await orderCollection.find({status:'pending'}).count()
-       const   orderShipped= await orderCollection.find({status:'shipped'}).count()
+       const  orderShipped= await orderCollection.find({status:'shipped'}).count()
        const  orderOutForDelivery= await orderCollection.find({status:'Out for delivery'}).count()
        const  orderDelivered= await orderCollection.find({status:'delivered'}).count()
        const  orderCancelled= await orderCollection.find({status:'cancelled'}).count()
 
-       let month=[],barchartData,j=0
+
+
+       let month=[],barchartData,j=0 ,year= +req.body.year||new Date().getFullYear()
+
+     
+
        for(i=1;i<=12;i++){
-      
-        barchartData= await orderCollection.aggregate([{$project:{total_price:1,DeliveredDate:{$month:'$DeliveredDate'}}},
-                                                       {$match:{DeliveredDate:i}},{$group:{_id:{sum:{$sum:"$total_price"}}}}])
+        barchartData= await orderCollection.aggregate([{$project:{total_price:1,DeliveredDate:{$month:'$DeliveredDate'},Deliveredyear:{$year:'$DeliveredDate'}}},
+        {$match:{$and:[{DeliveredDate:i},{Deliveredyear:year}]}},{$group:{_id:{sum:{$sum:"$total_price"}}}}
+    ])
+       
+        
         month[j]=0
          barchartData.forEach(function(bar){
          month[j]=month[j]+bar._id.sum
         })
          j++
-        }
- 
+         }
 
                              
 
-        res.render('../views/Admin/dashboard.ejs',{order,user,total_price,orderCancelled,orderDelivered,orderOutForDelivery,orderShipped,orderPending,month})
+        res.render('../views/Admin/dashboard.ejs',{order,user,total_price,orderCancelled,orderDelivered,orderOutForDelivery,orderShipped,orderPending,month,year})
 
     } catch (error) {
         console.log(error)
@@ -88,7 +94,30 @@ const adminHome =async (req, res) => {
 
 const sort_sales_report_download= async(req,res)=>{
 
-    console.log(req.body);
+    
+    req.session.sale= req.body
+
+    console.log(typeof(+req.body.from));
+    let start= +req.body.from
+    let end=+req.body.to
+   // console.log(ISODate(start));
+    
+    let salesDate= req.body
+    const user= await orderCollection.aggregate([{$match:{DeliveredDate:{$gte:new Date(start),$lte:new Date(end)}}}])
+    const total= await orderCollection.find({DeliveredDate:{$gte:salesDate.from,$lte:salesDate.to}})
+  console.log(user);
+    res.redirect('back')
+    
+    // if(req.body.type=='pdf'){
+
+    //    res.redirect('sales_report_pdf')
+    // }else if(req.body.type=='excel'){
+
+    //     res.redirect('sales_report_xl')
+    // }else{
+
+    //     res.redirect('sales_report_csv')
+    // }
 
 
 }
@@ -96,14 +125,20 @@ const sort_sales_report_download= async(req,res)=>{
 async function reportPdfDownload(req,res){
 
     try{
-        const total_price=await orderCollection.aggregate([{$match:{status:"delivered"}},{$group:{_id:null,total:{$sum:'$total_price'}}}])
-        
-        const productData= await orderCollection.aggregate([
-            {$match:{status:"delivered"}},
+
+    let salesDate= req.session.sale
+
+   
+
+    const total_price=await orderCollection.aggregate([{$match:{status:"delivered"}},{$group:{_id:null,total:{$sum:'$total_price'}}}])
+    const productData= await orderCollection.aggregate([
+            {$match:{status:'delivered'}},
             {$lookup:{from:'products',localField:"order_details.product",foreignField:"_id",as:"order_details.product"}},
             {$lookup:{from:'users',localField:"user",foreignField:"_id",as:"user"}},
-            {$unwind:"$user"}])
+            {$unwind:"$user"}
+        ])
 
+            
         const data={
 
             productData:productData,

@@ -51,25 +51,28 @@
             <div class="col-md-8">
                 <%if(orderData){  %> 
                     <%orderData.forEach(function(order){ %> 
-                <div class="row border border-5 m-4 order">
+                <div class="row border border-5 m-4 ">
                     <%let date = order.placedDate%>
                     <%let isoString = date.toISOString()%>
                     <%let newDate = isoString.split('T')[0]%>
-                
-                        <div class="col-2 mb-3"><%=newDate%> </div> 
-                        <div class="col-4 mb-3">
+                  
+                           <div class="row col-lg-8">
+                        <div class="col-4 mb-3"><%=newDate%> </div> 
+                        <div class="col-6 mb-3">
                          <%for(i=0;i<order.order_details.length;i++) { %> 
                         <%=order.product[i].name%>&nbsp;X <%=order.order_details[i].quantity%> <br> 
                         <% } %> </div>
-                        <div class="col-1 mb-3">₹<%=order.total_price%> </div>
-                        
-                        <div class="col-md-2 col-sm-6 mb-3"><%=order.status%> </div>
-                        <div class="col-md-1 col-sm-6 mb-3"> <a href="/order_detail?id=<%=order._id%>" ><i class="fas fa-eye text-dark mr-1"></i></a></div>
+                        <div class="col-2 mb-3">₹<%=order.total_price%> </div>
+                        </div>
+                        <div class="row col-lg-4 justify-content-between">
+                        <div class="col-5  mb-3"><%=order.status%> </div>
+                        <div class="col-3 text-center  mb-3"> <a href="/order_detail?id=<%=order._id%>" ><i class="fas fa-eye text-dark mr-1"></i></a></div>
                         <%if(order.status=='Out for delivery' || order.status=='delivered' || order.status=='cancelled') { %> 
         
                         <% }else{ %> 
-                          <div class="col-2 mb-3"> <a href="/order_cancel?id=<%=order._id%>" class="second-bg rounded text-dark Cancel" id="cancel" > Cancel</a></div>
+                          <div class="col-4 col-sm-4 mb-3"> <a href="/order_cancel?id=<%=order._id%>" class="second-bg rounded text-dark Cancel" id="cancel" > Cancel</a></div>
                           <% } %> 
+                        </div>
 
                        
                 </div>

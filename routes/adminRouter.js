@@ -12,7 +12,7 @@ const orderController=require('../Controller/Admin/orderController')
 // Admin Login ,Logout and Verification
 admin_route.get('/',requireAuth.isActive,adminController.adminLoginView)
 admin_route.post('/',adminController.adminVerification)
-admin_route.get('/dashboard',requireAuth.isLogin,adminController.adminHome)
+admin_route.get('/dashboard',requireAuth.isLogin,adminController.adminHome).post('/dashboard',requireAuth.isLogin,adminController.adminHome)
 admin_route.get('/logout',adminController.adminLogout)
 
 //Admin User Management
