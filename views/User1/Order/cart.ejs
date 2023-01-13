@@ -1,0 +1,175 @@
+<%-include('../partials/header.ejs') %>
+
+ <!-- Cart Start -->
+ <div class="container-fluid pt-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-8 table-responsive mb-5">
+            <% if(CartItems.length>0){ %>
+            <table class="table table-bordered text-center mb-0">
+                <thead class="second-bg text-dark rounded">
+                    <tr>
+                        <th>Products</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+            
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody class="align-middle">
+                    
+                        <% CartItems.forEach(function(cart){ %>
+                    <tr>
+                        <td class="align-middle"><img src="Admin/assets/product/<%=cart.product.image%>" alt="product_image" style="width: 50px;"></td>
+                        <td class="align-middle"><a href="/product_view?id=<%=cart.product._id%>"><%=cart.product.name  %> </a> </td>
+                        <td class="align-middle">₹<%=cart.product.product_price  %> </td>
+                        <td class="align-middle">
+                            <div class="input-group quantity mx-auto" style="width: 100px;">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-sm btn-transparent text-decoration-none btn-minus" onclick="changeQuantity('<%=userStatus._id%>','<%=cart.product._id%>',-1,'<%=cart.quantity%>')">
+                                    <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                                <!-- <span class="m-2" id="<%=//cart.product._id%>"><%=//cart.quantity%></span> -->
+                                <input type="text" id="<%=cart.product._id%>" class="form-control form-control-sm footer-text text-center" value="<%=cart.quantity%>">
+
+                                <div class="input-group-btn">
+                                    <button class="btn btn-sm  btn-plus  btn-transparent text-decoration-none " onclick="changeQuantity('<%=userStatus._id%>','<%=cart.product._id%>',1,'<%=cart.quantity%>')">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="align-middle"><button class="btn btn-sm  btn-transparent text-decoration-none" onclick="deleteItem('<%=cart.product._id%>')"><i class="fa fa-times"></i></button></td>
+                    </tr>
+                        <% }) %> 
+                </tbody>
+            </table>
+            <% }else{ %> 
+
+                <table class="table table-bordered text-center mb-0">
+                    <thead class="second-bg text-dark">
+                        <tr>
+                            <th></th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <td><h2>Your Cart is empty</h2></td>
+                    </tbody>
+                    </table>
+                <% } %> 
+        </div>
+        <div class="col-lg-4">
+           
+            <div class="card border-secondary mb-5">
+                <div class="card-header second-bg border-0 rounded">
+                    <h4 class="font-weight-semi-bold m-0 text-dark">Cart Summary</h4>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3 pt-1">
+                        <h6 class="font-weight-medium">Items</h6>
+                        <h6 class="font-weight-medium"><%=CartItems.length%></h6>
+                    </div>
+                    
+                </div>
+                <div class="card-footer border-secondary bg-transparent">
+                    <div class="d-flex justify-content-between mt-2">
+                        <h5 class="font-weight-bold">Total</h5>
+                        <h5 class="font-weight-bold" id="total">₹ <% if(total) {%> <%=total.total_price%><% } %> </h5>
+                    </div>
+                    <div class="d-flex justify-content-between mt-2">
+                        <h5 class="font-weight-bold"></h5>
+                        <h5 class="font-weight-bold"></h5>
+                    </div>  
+                        <a href="/checkout" class="second-bg font-weight-bold btn btn-block footer-text my-3 py-3 rounded" id="checkout">Proceed To Checkout</a>
+               
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Cart End -->
+<script>
+     
+    if(<%=CartItems.length%><1){
+
+        document.getElementById('checkout').href='/products'
+        document.getElementById('checkout').innerHTML='Back to shop'
+
+
+    }
+    function changeQuantity(user_id,product_id,count,qty){
+        
+           Count=+count
+           let id=product_id
+           $.ajax({
+
+             url:'/update_cart',
+             data:{
+                 user:user_id,
+                 product:product_id,
+                 count:Count,
+                 quantity:qty
+             },
+             method:'post',
+             success:(response)=>{
+
+                if(response.outOfStock){
+              
+
+                    Swal.fire(
+                    'oops!',
+                   'Product is currently out of stock',
+                   'error')
+                }
+
+                 if(response.success){
+               let itemCount=document.getElementById(id).value
+                    document.getElementById(id).value=parseInt(itemCount)+ parseInt(Count) 
+             
+           // location.reload()
+                 }
+                 if(response.total){
+                     const total_price= response.total.total_price
+                     document.getElementById("total").textContent=total_price
+                 }
+                 if(response.delete){
+
+                     Swal.fire(
+                  'oops!',
+                   'Item deleted From Cart',
+                   'error'
+                            ).then(()=>{
+
+                             location.reload()
+                            })
+                 }
+
+
+            
+             }
+           })
+
+
+        
+    }
+
+    function deleteItem(product_id){
+
+     $.ajax({
+         type:'get',
+         url:'/delete_item',
+         data:{
+          id:product_id
+         },
+         success:(response)=>{
+             if(response){
+                 location.reload()
+             }
+         }
+     })
+
+    }
+</script>
+<%-include('../partials/footer.ejs') %>

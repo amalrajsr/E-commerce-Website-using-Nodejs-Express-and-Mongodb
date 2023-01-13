@@ -1,0 +1,190 @@
+<%-include('./partials/header.ejs') %>
+
+<style>
+    
+    .img-zoom-container {
+      position: relative;
+    }
+    
+    .img-zoom-lens {
+      position: absolute;
+      /*set the size of the lens:*/
+      width: 80px;
+      height: 80px;
+    }
+    
+    .img-zoom-result {
+        z-index: 2;
+        position: absolute;
+        top: -90px;
+        left: -25px;
+      border: 1px solid #d4d4d4;
+      /*set the size of the result div:*/
+      width: 550px;
+      height: 500px;
+    }
+  
+    </style>
+
+<!-- Shop Detail Start -->
+<div class="container-fluid py-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-5 pb-5">
+            <div id="product-carousel" class="carousel slide" data-ride="carousel" onmouseleave="displayHide()">
+                <div class="carousel-inner border">
+                    <div class="carousel-item active img-zoom-container text-center" >
+                        <img class="myresult img-fluid" src="./Admin/assets/product/<%=productData[0].image%>" alt="Image" id="myimage" onmouseover="displayHover()" width="300px" height="400px">
+
+                    </div>
+
+                    <!-- <div class="carousel-item">
+                        <img class="w-100 h-100" src="User/img/product-2.jpg" alt="Image">
+                    </div> -->
+                </div>
+                <!-- <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
+                    <i class="fa fa-2x fa-angle-left text-dark"></i>
+                </a>
+                <a class="carousel-control-next" href="#product-carousel" data-slide="next">
+                    <i class="fa fa-2x fa-angle-right text-dark"></i>
+                </a> -->
+            </div>
+        </div>
+        <div class="col-lg-7 pb-5">
+            <h6 class="font-weight-semi-bold">Category: <%=productData[0].category[0].category_name%></h6>
+            <h3 class="font-weight-semi-bold"><%=productData[0].name  %> </h3>
+            
+            <h3 class="font-weight-semi-bold mb-4">₹<%=productData[0].product_price%> </h3>
+            <div id="myresult" class="img-zoom-result" ></div>
+            <p class="mb-4"><%=productData[0].description%> </p>
+           
+           
+            <div class="d-flex  mb-4">
+                <div class="input-group quantity mr-3" >
+                    
+                       <% if(itemInWishlist) {%> 
+                        <a href="/wishlist" class=" btn mt-2 mr-2 rounded text-decoration-none border" id="wishlist-link" ><i class="fa fa-heart" > Go to wishlist</i></a>
+                        <% }else { %> 
+                        <button id="wishlist-btn" class="btn  btn-sm rounded cart  mr-2 " onclick="add_to_wishlist('<%=productData[0]._id%>')">
+                            <i class="fa fa-heart rounded"> Add to wishlist</i>
+                        </button>
+                        <% } %> 
+                           <!-- <input type="hidden" name="id" value="<%=//productData[0]._id%>"> -->
+                           <% if(itemExist){ %> 
+                            <a href="/cart" class=" btn btn-md  mt-2 rounded " id="cart-link"><i class="fa fa-shopping-cart " > Go to cart</i></a>
+                            <% } else { %> 
+                            <button id="cart-btn" class="btn  btn-sm rounded cart " onclick="addToCart('<%=productData[0]._id%>')">
+                                <i class="fa fa-shopping-cart mt-2" > Add to cart</i>
+                            </button>
+                            <% } %> 
+                   
+                </div>
+                </div>
+            </div>
+         </div>
+        
+  </div>
+</div>
+
+<script src="./User/js/zoom.js"></script>
+<script>
+    // Initiate zoom effect:
+    imageZoom("myimage", "myresult");
+ </script>
+     <script>
+     function displayHover(){
+        document.getElementById('myresult').style.display='block'
+       // console.log('working')
+     }
+     function displayHide(){
+        document.getElementById('myresult').style.display='none'
+     }
+     displayHide()
+
+</script>
+<script>
+
+    
+function addToCart(productId){
+
+$.ajax({
+
+    type:'post',
+    url:"/cart",
+    data:{
+        id:productId
+    },
+    success:(res)=>{
+
+        if(res.success){
+                       
+            const Toast = Swal.mixin({
+toast: true,
+position: 'top-end',
+showConfirmButton: false,
+timer: 3000,
+timerProgressBar: true,
+didOpen: (toast) => {
+toast.addEventListener('mouseenter', Swal.stopTimer)
+toast.addEventListener('mouseleave', Swal.resumeTimer)
+}
+})
+
+Toast.fire({
+icon: 'success',
+title: 'Item added to Cart',
+timer:1000
+})
+
+$("#cart-btn").load(location.href + " #cart-link");
+let cartCount=document.getElementById('cartt').innerHTML
+document.getElementById('cartt').innerHTML= parseInt(cartCount)+ parseInt(1)
+
+        }
+    }
+})
+
+}
+</script>
+
+<script>
+
+function add_to_wishlist(product_id){
+$.ajax({
+  url:'/wishlist',
+  type:'post',
+  data:{
+    product:product_id
+  },
+  success:(response)=>{
+      if(response.success){
+    
+        const Toast = Swal.mixin({
+toast: true,
+position: 'top-end',
+showConfirmButton: false,
+timer: 1000,
+timerProgressBar: true,
+didOpen: (toast) => {
+toast.addEventListener('mouseenter', Swal.stopTimer)
+toast.addEventListener('mouseleave', Swal.resumeTimer)
+}
+})
+
+Toast.fire({
+icon: 'success',
+title: 'Item added to wishlist'
+})
+
+        
+$("#wishlist-btn").load(location.href + " #wishlist-link");
+
+wishlistCount= document.getElementById('wishlistt').innerHTML
+document.getElementById('wishlistt').innerHTML=parseInt(wishlistCount)+1
+
+
+      }
+  }
+})
+}
+</script>
+<%-include('./partials/footer.ejs') %>

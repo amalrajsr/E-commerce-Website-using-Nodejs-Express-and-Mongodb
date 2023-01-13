@@ -1,0 +1,187 @@
+<%-include('./partial/header.ejs')%>
+<style>
+.total-sale{
+
+    background: rgb(118, 187, 208);
+}
+.order{
+
+    background: rgb(159, 167, 87);
+}
+.user{
+
+    background-color: rgb(100, 148, 132);
+}
+
+@media only screen and (max-width: 576px) {
+ .download{
+  
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+  
+ }
+}
+</style>
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Dashboard</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active"></li>
+    </ol>
+    <div class="row d-flex justify-content-between">
+        <div class="col-xl-3 col-md-6">
+            <div class="card  total-sale text-white mb-4">
+                 <div class="card-body">Total Revenue:<h3>&#8377; <% if(total_price.length>0)  {%>  <%=total_price[0].total%> <% } %> </h3></div>
+                <div class="card-footer d-flex align-items-center">
+                    <a class="small text-white text-decoration-none" href="/admin/sales_report_pdf">Download Sales Report in PDF</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div> 
+                </div> 
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card order text-white mb-4">
+                <div class="card-body">Total Orders: <h3><%=order.length%> </h3></div>
+                <div class="card-footer d-flex align-items-center">
+                    <a class="small text-white stretched-link text-decoration-none" href="/admin/sales_report_csv">Download Sales Report in CSV</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card user text-white mb-4">
+                <div class="card-body">Total Users: <h3><%=user.length%> </h3></div>
+                <div class="card-footer d-flex align-items-center ">
+                    <a class="small text-white text-decoration-none" href="/admin/sales_report_xl">Download Sales Report in XL</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-xl-3 col-md-6">
+            <div class="card bg-danger text-white mb-4">
+                <div class="card-body">Danger Card</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="#">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+
+    <!-- ----------------------------Sales-------------------------- -->
+    <form action="sort_sales_report" method="post">
+      <div class="contaniner mt-5 mb-5">
+      <div class="row">
+        <div class="col">
+          <input type="month" class="form-control"  name="from" required>
+        </div>
+        <div class="col">
+          <input type="month" class="form-control"  name="to" required>
+        </div> 
+        <div class=" col-sm-2 download">
+          <button class=" btn btn-outline-success btn-sm"  >download</button>
+        </div>
+      </div>
+    </div>
+    </form>
+    <!-- ------------------------------Sales ensd-------------------- -->
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-area me-1"></i>
+                    Bar Chart 
+                </div>
+                <div class="card-body"><canvas id="myBarChart" width="100%" height="60"></canvas></div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-bar me-1"></i>
+                    Pie Chart 
+                </div>
+                <div class="card-body"><canvas id="myPieChart" width="100%" height="60"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+
+
+<script>
+
+    // Set new default font family and font color to mimic Bootstrap's default styling
+Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+Chart.defaults.global.defaultFontColor = '#292b2c';
+
+// Bar Chart Example
+var ctx = document.getElementById("myBarChart");
+var myLineChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ["January", "February", "March", "April", "May", "June","July","August","September","October","Novembor","Decomber"],
+    datasets: [{
+      label: "Revenue",
+      backgroundColor: "rgba(2,117,216,1)",
+      borderColor: "rgba(2,117,216,1)",
+      data: [<%=month[0]%>, <%=month[1]%>, <%=month[2]%>, <%=month[3]%>, <%=month[4]%>, <%=month[5]%>, <%=month[6]%>,
+              <%=month[7]%>,<%=month[8]%>,,<%=month[9]%>,<%=month[10]%>,<%=month[11]%>],
+    }],
+  },
+  options: {
+    scales: {
+      xAxes: [{
+        time: {
+          unit: 'month'
+        },
+        gridLines: {
+          display: false
+        },
+        ticks: {
+          maxTicksLimit: 12
+        }
+      }],
+      yAxes: [{
+        ticks: {
+          min: 0,
+          max: 5000,
+          maxTicksLimit: 5
+        },
+        gridLines: {
+          display: true
+        }
+      }],
+    },
+    legend: {
+      display: false
+    }
+  }
+});
+
+</script>
+
+<script>
+    const cty = document.getElementById('myPieChart');
+      
+      new Chart(cty, {
+        type: 'pie',
+        data: {
+          labels: ['Pending','Shipped', 'Out for Delivery', 'Delivered', 'Cancelled'],
+          datasets: [{
+            label: 'Revenue',
+            backgroundColor: ['#007bff', '#C8CDD1', '#ffc107', '#133122','#AD2633'],
+            data: [<%=orderPending%>,<%=orderShipped%>,<%=orderOutForDelivery%>,<%=orderDelivered%>,<%=orderCancelled%>],
+          //  borderWidth: 1
+          }]
+        }
+      });
+
+</script>
+
+
+    <!-- <script src="assets/demo/chart-area-demo.js"></script> -->
+    <!-- <script src="assets/demo/chart-bar-demo.js"></script> -->
+    <!-- <script src="assets/demo/chart-pie-demo.js"></script> -->
+<%-include('./partial/footer.ejs')%>

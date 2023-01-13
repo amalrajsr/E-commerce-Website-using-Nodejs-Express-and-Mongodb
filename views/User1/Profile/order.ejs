@@ -1,0 +1,92 @@
+<%-include('../partials/header.ejs') %>
+
+<style>
+  /* .order{
+
+    box-shadow:0 0 5px #888888 inset;
+  } */
+</style>
+
+<div class="container">
+    <div class="main-body">
+          <div class="row gutters-sm mt-5 ">
+            <div class="col-md-4 mb-3 ">
+            
+              <!-- <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                    <div class="mt-3">
+                      <h4>John Doe</h4>
+                      <p class="text-secondary mb-1">Full Stack Developer</p>
+                      <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
+                      <button class="btn btn-primary">Follow</button>
+                      <button class="btn btn-outline-primary">Message</button>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+              <h4>PROFILE</h4>
+              <div class="card mt-3  ">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap ">
+                    <h6 class="mb-0"><a href="/profile" >Profile</a> </h6>
+                  
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0"><a href="/address" class="text-dark">Address</a> </h6>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0"><a href="/order" class="text-dark">Order</a> </h6>
+                    
+                  </li>
+                   <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0"><a href="/change_password" class="text-dark">Privacy</a> </h6>
+                    
+                  </li>
+                <!--  <li class="list-group-item d-flex justify-content-between align-items-center flex-wr  </li> -->
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-8">
+                <%if(orderData){  %> 
+                    <%orderData.forEach(function(order){ %> 
+                <div class="row border border-5 m-4 order">
+                    <%let date = order.placedDate%>
+                    <%let isoString = date.toISOString()%>
+                    <%let newDate = isoString.split('T')[0]%>
+                
+                        <div class="col-2 mb-3"><%=newDate%> </div> 
+                        <div class="col-4 mb-3">
+                         <%for(i=0;i<order.order_details.length;i++) { %> 
+                        <%=order.product[i].name%>&nbsp;X <%=order.order_details[i].quantity%> <br> 
+                        <% } %> </div>
+                        <div class="col-1 mb-3">₹<%=order.total_price%> </div>
+                        
+                        <div class="col-md-2 col-sm-6 mb-3"><%=order.status%> </div>
+                        <div class="col-md-1 col-sm-6 mb-3"> <a href="/order_detail?id=<%=order._id%>" ><i class="fas fa-eye text-dark mr-1"></i></a></div>
+                        <%if(order.status=='Out for delivery' || order.status=='delivered' || order.status=='cancelled') { %> 
+        
+                        <% }else{ %> 
+                          <div class="col-2 mb-3"> <a href="/order_cancel?id=<%=order._id%>" class="second-bg rounded text-dark Cancel" id="cancel" > Cancel</a></div>
+                          <% } %> 
+
+                       
+                </div>
+                  <% })} %> 
+            </div>
+          </div>
+
+        </div>
+    </div>
+<script>
+  
+// if(order.status=='out for delivery' || order.status=='delivered'){
+   
+//   document.getElementById('cancel').style.display='none'
+// }
+
+  
+</script>
+
+    <%-include('../partials/footer.ejs') %>

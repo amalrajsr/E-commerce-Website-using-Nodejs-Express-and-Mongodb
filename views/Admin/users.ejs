@@ -1,0 +1,41 @@
+            <%-include('./partial/header.ejs')%>  
+              
+          <div class="container">
+            <h3>USER MANAGEMENT</h3>
+            <br><br>
+            <form>
+              <input type="text" name="search" id="" placeholder=" search category">
+               <% if(value==true) {%> 
+               <button class="btn btn-outline-dark btn-sm" value="search" >Back</button>
+               <% }else{ %>
+                <button class="btn btn-outline-dark btn-sm" value="search" >search</button>
+                <% } %> 
+           </form> <br>
+            <% if(userData!=null) { %>
+            <table class="table table-bordered">
+                <thead >
+                  <tr>
+                    <!-- <th scope="col">SL No.</th> -->
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <!-- <th scope="col">Status</th>                   -->
+                  </tr>
+                </thead>
+                <tbody>
+                    <% userData.forEach(function(userList){ %>
+                  <tr>
+                    <!-- <th scope="row"> </th> -->
+                    <td><%= userList.name%></td>
+                    <td><%= userList.email%></td>
+                    <% if(userList.isBlocked==false) { %> 
+                    <td><a class="btn btn-outline-success btn-sm" href="block_user?id=<%=userList.id%> ">BLOCK</a></td>
+                    <% } else{ %>
+                        <td><a class="btn btn-outline-danger btn-sm" href="block_user?id=<%=userList.id%> ">UNBLOCK</a></td>
+                        <% } %>
+                  </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+              <% } %>
+            </div>
+            <%-include('./partial/footer.ejs')%>

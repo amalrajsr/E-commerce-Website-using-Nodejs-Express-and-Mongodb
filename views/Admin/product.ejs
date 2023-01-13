@@ -1,0 +1,103 @@
+<%-include('./partial/header.ejs')%>
+
+    <div>
+        <br><br>
+    </div>
+
+    <!-- ----------------------------Search and Add product --------------------------->
+    <div class="container d-flex justify-content-between">
+        <a href="/admin/add_Product" class="open-button btn btn-outline-success" >Add Product</a>
+
+        <!-- <button type="button" class="btn btn-outline-success d-inline" data-bs-toggle="modal" data-bs-target="#myModal">
+            Add Product
+          </button> -->
+        <!-- <form class="d-inline">
+         <input type="text" name="search" id="" placeholder=" search product">
+           <button class="btn btn-outline-dark btn-sm" value="search" >search</button>
+   
+      </form>
+      <form class="d-inline">
+        <input type="text" name="search" id="" placeholder=" search product">
+          <button class="btn btn-outline-dark btn-sm" value="search" >search</button>
+  
+     </form> -->
+      </div> <br><br>
+
+      <!-- ---------------------------------Search and add products ends----------------->
+
+    <!-- ------------------------------------Modal------------------------------------ -->
+    <!-- Button to Open the Modal -->
+
+<!--   
+  The Modal
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content"> -->
+  
+        <!-- Modal Header -->
+        <!-- <div class="modal-header">
+          <h4 class="modal-title">Add Product</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div> -->
+  
+        <!-- Modal body -->
+        <!-- <div class="modal-body">
+          Modal body..
+        </div> -->
+  
+        <!-- Modal footer -->
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+  
+      </div>
+    </div>
+  </div> -->
+
+  <!-- -------------------------------------------Modal ends -->
+
+      <!-- ---------------------------------Tables-------------------------------------- -->
+    <div class="container">
+
+    <% if(productData!=null) {%> 
+     <table class="table table-bordered">
+        <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col"> Price</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Flag</th>
+                    <!-- <th scope="col">Description</th> -->
+                    <th scope="col"></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <% productData.forEach(function(productData){  %> 
+                <tr>
+
+                    <td><%= productData.name %> </td>
+                    <td><img src="/Admin/assets/product/<%=productData.image%>" alt="product image"  height="70px" width="60px"></td>
+                    <td><%=productData.author %> </td>
+                    <td><%=productData.category  %> </td>
+                    <td><%=productData.stock  %></td>
+                    <td><%=productData.price%></td>
+                    <td><%=productData.status  %> </td>
+                    <td><%=productData.flag  %> </td>
+                    <!-- <td><%=//productData.description  %> </td> -->
+                    <td><a href="/admin/edit_product?id=<%=productData._id%>" class=" ms-2 mt-4"><i class="fas fa-edit"></i></a><a href="/admin/delete_product?id=<%=productData._id%>"class=" ms-2 mt-4" onclick="return confirm('Are you sure you want to delete')"><i class="fas fa-trash"></i></a></td>
+                </tr>
+                
+            </tbody>
+            <% }) %> 
+        </table>
+        <% } %> 
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+
+    <%-include('./partial/footer.ejs')%>

@@ -1,0 +1,139 @@
+<%-include('./partials/header.ejs') %>
+
+<!-- <div class="container-fluid border border-bottom-0 border-dark mt-5">
+    <div class="row">
+        <div class="col-12 py-5">
+            <div>
+                <h1 class="yourAccount">YOUR ACCOUNT</h1>
+            </div>
+        </div>
+    </div>
+ </div>
+  <div class="container-fluid border  border-top-0 border-dark">
+    <div class="row">
+        <div class="col-3 col-md-2">
+            <div>
+                <a href="">Account details</a>
+            </div>
+            <hr>
+            <div>
+                <a class="text-dark" href="">Address</a>
+            </div>
+            <hr>
+            <div>
+                <a class="text-dark" href="">Orders</a>
+            </div>
+        </div>
+        <div class = "vertical col-1"></div>
+        <div class="col-8 col-md-9">
+            <div class="container">
+                <div class="row yourAccount-row">
+                    <div class="col-lg-6">
+                        <div>
+                            <form action="/signup" class="d-flex flex-column" method="post" >
+                                <div class="flex-start"><label for="name">Name</label></div>                                                                                             
+                                <div><input readonly class="login-inputt mb-3" type="text" placeholder="Name" required="" name="name" id="name"></div>
+                                <div><label for="phone">Email</label></div> 
+                                <div><input readonly class="login-inputt mb-3" type="number" placeholder="email" required="" name="phone" id="phone" ></div>                                                                                                  
+                                                             
+                                <div class="login-inputt address-input bg-light">
+                                    <p></p>
+                                </div>   -->
+                                <!-- <div><a href=""><button class="btn border border-5 rounded my-3 ">Change Details</button></a></div>
+
+                            </form>
+                    </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div>
+                            <div> 
+                                 
+                                <div><label for="pass">Current Password</label></div> 
+                                <div><input readonly class="login-inputt mb-3" type="password" placeholder="Password"  name="pass" id="pass" ></div>  
+                                <div><label for="new-pass">New Password</label></div> 
+                                <div><input readonly class="login-inputt mb-3" type="password" placeholder="Password"  name="new-pass" id="new-pass"></div>    
+                                                                                                                                                                                                                                                                                         
+                                <div><a href=""><button class="btn border border-5 rounded my-3 ">change Password</button></a></div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+   </div>
+</div> --> 
+
+<div class="container">
+    <div class="main-body">
+          <div class="row gutters-sm mt-5 ">
+            <div class="col-md-4 mb-3 ">
+            
+              <h4>PROFILE</h4>
+              <div class="card mt-3  ">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap profile">
+                    <h6 class="mb-0"><a href="/profile"  >Profile</a> </h6>
+                  
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0"><a href="/address" class="text-dark">Address</a> </h6>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0"><a href="/order" class="text-dark">Order</a> </h6>
+                    
+                  </li>
+                   <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0"><a href="/change_password" class="text-dark">Privacy</a> </h6>
+                    
+                  </li>
+                <!--  <li class="list-group-item d-flex justify-content-between align-items-center flex-wr  </li> -->
+                </ul>
+              </div>
+            </div>
+
+
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body profile">
+           <form action="/edit_profile" method="post">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Full Name</h6>
+                    </div>
+                    <div class="col-sm-12 text-secondary">
+                        <input type="text" name="name" value="<%=userData.name%>" class="form-control border border-5" required>  
+                         
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                     
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-12 text-secondary">
+                      <input type="text"  name="email" value="<%=userData.email %>" class=" form-control border border-5" required disabled>  
+                    </div>
+                    <div class="col-sm-9 text-secondary">     
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <button class=" footer rounded footer-text">Edit</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+           </form>
+           
+
+            </form>
+            </div>
+          </div>
+
+        </div>
+    </div>
+
+    <%-include('./partials/footer.ejs') %>

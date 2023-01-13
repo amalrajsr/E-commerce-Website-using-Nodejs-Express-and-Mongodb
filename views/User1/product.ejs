@@ -1,0 +1,255 @@
+<%-include('./partials/header.ejs') %>
+<style>
+    *{
+        outline: red 1px !important;
+    }
+</style>
+
+
+<!-- Shop Start -->
+<div class="container-fluid pt-5">
+<div class="row px-xl-5">
+<!-- Shop Sidebar Start -->
+<div class="col-lg-3 col-md-12">
+    <!-- Price Start -->
+    <div class="border-bottom mb-4 pb-4 ">
+        <a class="btn shadow-none d-flex align-items-center justify-content-between second-bg text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
+        <h6 class="m-0">Categories</h6>
+                <i class="fa fa-angle-down text-dark"></i>
+            </a>
+            <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
+                <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+                    <% if(categoryData) {%> 
+                    <%categoryData.forEach(function(categoryData){  %> 
+                        <a href="/products?category=<%=categoryData.category_name%>" class="nav-item nav-link"><%=categoryData.category_name%> </a>
+                    <!-- <a href="" class="nav-item nav-link">Shirts</a>
+                    <a href="" class="nav-item nav-link">Jeans</a>
+                    <a href="" class="nav-item nav-link">Swimwear</a>
+                    <a href="" class="nav-item nav-link">Sleepwear</a>
+                    <a href="" class="nav-item nav-link">Sportswear</a>
+                    <a href="" class="nav-item nav-link">Jumpsuits</a>
+                    <a href="" class="nav-item nav-link">Blazers</a>
+                    <a href="" class="nav-item nav-link">Jackets</a>
+                    <a href="" class="nav-item nav-link">Shoes</a> -->
+                    <% })} %> 
+                </div>
+            </nav>
+    </div>
+    <!-- Price End -->
+ 
+</div>
+<!-- Shop Sidebar End -->
+
+
+<!-- Shop Product Start -->
+<!-- ---------------------------------------Search section--------------------------- -->
+
+<div class="col-lg-9 col-md-12">
+    <div class="row pb-3">
+        <div class="col-12 pb-1">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <form action="/products">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search by name" name="search">
+                        <div class="input-group-append">
+                            <button class="input-group-text bg-transparent footer-text">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="dropdown ml-4">
+                    <button class="btn border dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                                Sort by
+                            </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
+                        <a class="dropdown-item" href="/products?sort=low"> Low to High</a>
+                        <a class="dropdown-item" href="/products?sort=high"> High to Low</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- ---------------------------------------Search section Ends----------------------------->
+
+<!-- ---------------------------------------product Section Starts----------------------------->
+<% if(productData.length!=0) {%>   
+    
+        <% productData.forEach(function(product){ %>  
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1 h-50">
+            <div class="card product-item border-0 mb-4">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                  <a href="/product_view?id=<%=product._id%>">  <img class="img-fluid w-100" src="./Admin/assets/product/<%=product.image%>" alt="product image" ></a>
+                </div>
+                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                    <h6 class="text-truncate mb-3"><%=product.name%> </h6>
+                    <div class="d-flex justify-content-center">
+                        <h6> ₹<%=product.product_price%></h6>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between bg-light border">
+                    <button onclick="add_to_wishlist('<%=product._id%>')" class="btn btn-sm text-dark p-0"><i class="fas fa-heart footer-text mr-1"></i> wishlist</button>
+                    <button onclick="addToCart('<%=product._id%>')" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart footer-text mr-1"></i>Cart</button>
+                </div>
+            </div>
+        </div>
+        <% })} %> 
+   <!-- ---------------------------------------product Section End----------------------------->
+ 
+        
+        <div class="col-12 pb-1">
+            <nav aria-label="Page navigation">
+              <ul class="pagination justify-content-center mb-3">
+                <li class="page-item">
+                  <a class="page-link footer-text" href="?page=<%=previous%>" aria-label="Previous">
+                    <span aria-hidden="true" class="footer-text">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                </li>
+                <% for(i=1;i<=searchCount;i++) {%> 
+                    <li class="page-item"><a class="page-link text-dark"  href="?page=<%=i%>"><%=i%></a></li>
+                    <% } %> 
+                  <a class="page-link" href="?page=<%=next%>" aria-label="Next">
+                    <span aria-hidden="true" class="footer-text">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- Shop Product End -->
+</div>
+</div>
+
+
+<script>
+
+function add_to_wishlist(product_id){
+
+$.ajax({
+  url:'/wishlist',
+  type:'post',
+  data:{
+    product:product_id
+  },
+  success:(response)=>{
+      if(response.success){
+       
+        const Toast = Swal.mixin({
+toast: true,
+position: 'top-end',
+showConfirmButton: false,
+timer: 1000,
+timerProgressBar: true,
+didOpen: (toast) => {
+toast.addEventListener('mouseenter', Swal.stopTimer)
+toast.addEventListener('mouseleave', Swal.resumeTimer)
+}
+})
+
+Toast.fire({
+icon: 'success',
+title: 'Item added to wishlist',
+timer:1000
+})
+
+wishlistCount= document.getElementById('wishlistt').innerHTML
+document.getElementById('wishlistt').innerHTML=parseInt(wishlistCount)+1
+
+      }
+
+      if(response.exists){
+         
+
+     
+        const Toast = Swal.mixin({
+toast: true,
+position: 'top-end',
+showConfirmButton: false,
+timer: 1000,
+timerProgressBar: true,
+didOpen: (toast) => {
+toast.addEventListener('mouseenter', Swal.stopTimer)
+toast.addEventListener('mouseleave', Swal.resumeTimer)
+}
+})
+
+        Toast.fire({
+icon: 'success',
+title: 'Item already in wishlist',
+timer:1000
+})
+
+      }
+
+  }
+})
+}
+</script>
+
+
+
+<script>
+     function addToCart(id){
+
+            
+$.ajax({
+
+    type:'post',
+    url:'/cart',
+    data:{
+        id:id
+    },
+    success:(res)=>{
+       if(res.success){
+        console.log(res)
+        const Toast = Swal.mixin({
+toast: true,
+position: 'top-end',
+showConfirmButton: false,
+timer: 1000,
+timerProgressBar: true,
+didOpen: (toast) => {
+toast.addEventListener('mouseenter', Swal.stopTimer)
+toast.addEventListener('mouseleave', Swal.resumeTimer)
+}
+})
+
+Toast.fire({
+icon: 'success',
+title: 'Item added to cart'
+})
+     
+let cartCount=document.getElementById('cartt').innerHTML
+document.getElementById('cartt').innerHTML= parseInt(cartCount)+ parseInt(1)
+
+       }
+
+       if(res.update){
+
+        const Toast = Swal.mixin({
+toast: true,
+position: 'top-end',
+showConfirmButton: false,
+timer: 1000,
+timerProgressBar: true,
+didOpen: (toast) => {
+toast.addEventListener('mouseenter', Swal.stopTimer)
+toast.addEventListener('mouseleave', Swal.resumeTimer)
+}
+})
+
+Toast.fire({
+icon: 'success',
+title: ' cart updated'
+})
+
+        
+       }
+    }
+})
+}
+</script>
+<%-include('./partials/footer.ejs') %>

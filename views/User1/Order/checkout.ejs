@@ -1,0 +1,262 @@
+<%-include('../partials/header.ejs') %>
+<style>
+  .couponModal{
+   position: absolute;
+   top: 10px;
+   right: 100px;
+   bottom: 0;
+   left: 0;
+   height: 350px;
+   overflow: auto;
+   overflow-y: auto;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="./User/profile/checkout.css">
+
+ 
+    <div class="untree_co-section">
+        <div class="container">
+          <div class="row mb-5">
+            <div class="col-md-12">
+             
+            </div>
+          </div>
+          <div class="row mb-5">
+            <div class="col-md-12">
+             <h2 class="h3 mb-3 text-black">Coupon Code</h2>
+             <div class="p-3 p-lg-5 border bg-white">
+
+               <label for="c_code" class="text-black mb-3">Enter your coupon code  </label>
+            
+               <div class="input-group w-75 couponcode-wrap">
+                 <input type="text" class="form-control me-2" id="coupon" placeholder="Coupon Code" aria-label="Coupon Code" aria-describedby="button-addon2" onkeyup="applyCoupon()">
+                 <input type="hidden" name="couponId" id="couponId">
+               
+                 <div class="input-group-append">
+                 </div>
+                 
+               </div>
+                 <p id="message" class="text-bold text-danger mt-2"></p>      
+             </div>
+             </div>
+             </div>
+          <div class="row">
+            <div class="col-md-6 mb-5 mb-md-0">
+              <h2 class="h3 mb-3 text-black">Billing Details</h2>
+              <div class="p-3 p-lg-5 border bg-white">
+                
+             
+         
+<!-- --------------------------------------toggle button to add address------------------------------------ -->
+                <div class="form-group">
+                  <!-- <label for="ship_address" class="text-black" address-bs-toggle="collapse" href="#ship_address" role="button" aria-expanded="false" aria-controls="ship_different_address"><input type="checkbox" value="1" id="c_ship_different_address"> Add an Address?</label>
+                  <div class="collapse"   id="ship_address"> -->
+                    <!-- class="collapse"  class for ship address div -->
+                    <div class="py-2">
+                      <form action="/pay" method="post">
+                      <div class="form-group">
+                        <label for="address" class="text-black">Address<span class="text-danger">*</span></label>
+                        <select id="address" class="form-control" name="address" onchange="displayAddress(this.value)">
+                          <option value="none" >Select an address</option>
+                          <% address.forEach(function(address){ %>    
+                          <option value="<%=address._id%>">   <%=address.name%>, <%=address.address%>   </option>   
+                          <% }) %>  
+        
+                        </select>
+                      </div>
+
+                     <!-- <input type="checkbox" value="1" id="add_address" address-bs-toggle="collapse" href="#ship_address" role="button" aria-expanded="false" aria-controls="ship_different_address"> Add an Address?</label> -->
+                      <div class=""   id="ship_address">
+                      <div class="form-group row">
+                        <div class="col-md-6">
+                          <label for="name" class="text-black"> Name <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" id="name" name="name" required > 
+                        </div>
+                        <div class="col-md-6">
+                          <label for="lname" class="text-black">Mobile <span class="text-danger">*</span></label>
+                          <input type="number" class="form-control" id="number" name="mobile" required >
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-md-6">
+                          <label for="email" class="text-black">Email </label>
+                          <input type="email" class="form-control" id="email" name="email" required >
+                        </div>
+                        <div class="col-md-6">
+                          <label for="zipcode" class="text-black">Zip Code </label>
+                          <input type="number" class="form-control" id="zipcode" name="zipcode" required >
+                        </div>
+                      </div>
+                      <div class="form-group row  mb-3">
+                        <div class="col-md-12">
+                          <label for="address" class="text-black">Address <span class="text-danger">*</span></label> 
+                         <input type="text" class="form-control" id="addresss" name="new_address" required >
+                        </div>
+                      </div>
+
+
+                     </div>
+
+                     </div>
+                    </div>
+
+                <!-- <div class="form-group">
+                  <label for="c_order_notes" class="text-black">Order Notes</label>
+                  <textarea name="c_order_notes" id="c_order_notes" cols="30" rows="5" class="form-control" placeholder="Write your notes here..."></textarea>
+                </div> -->
+
+                  </div>
+                 </div>
+                 <div class="col-md-6">
+<!-- ------------------------------------------Coupon------------------------------ -->
+                 <!-- <div class="row mb-5">
+                 <div class="col-md-12">
+                  <h2 class="h3 mb-3 text-black">Coupon Code</h2>
+                  <div class="p-3 p-lg-5 border bg-white">
+
+                    <label for="c_code" class="text-black mb-3">Enter your coupon code  </label>
+                 
+                    <div class="input-group w-75 couponcode-wrap">
+                      <input type="text" class="form-control me-2" id="coupon" placeholder="Coupon Code" aria-label="Coupon Code" aria-describedby="button-addon2" onkeyup="applyCoupon()">
+                      <input type="hidden" name="couponId" id="couponId">
+                    
+                      <div class="input-group-append">
+                      </div>
+                      
+                    </div>
+                      <p id="message" class="text-bold text-danger mt-2"></p>      
+                  </div>
+                  </div>
+                  </div> -->
+<!-- ---------------------------------------Coupon Ends---------------------------------- -->
+                 <div class="row mb-5">
+                 <div class="col-md-12">
+                  <h2 class="h3 mb-3 text-black">Your Order</h2>
+                  <div class="p-3 p-lg-5 border bg-white">
+                    <% let totalPrice=0 %> 
+                 
+                      <% if(CartItems.length>0){ %>
+                        <% let productTotal=0 %> 
+                    <table class="table site-block-order-table mb-5">
+                      <thead>
+                        <th>Product</th>
+                        
+                        <th>Total</th>
+                      </thead>
+                      <tbody>
+                        <% CartItems.forEach(function(cart){ %>
+                        <tr>
+                          <td><%=cart.product.name%><strong class="mx-2">x</strong> <%=cart.quantity%></td>
+                          <% productTotal=cart.product.product_price*cart.quantity %> 
+                          <td><%=productTotal%> </td>
+                          <% totalPrice=totalPrice+productTotal  %> 
+                        </tr>
+                        <% })} %> 
+                        <tr>
+                          <td class="text-black">Discount</td>
+                          <td class="text-black font-weight-bold"><strong id="discount">0</strong></td>
+                        </tr>
+                        <tr>
+                          <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
+                          <td class="text-black font-weight-bold"><strong id="total"><%=totalPrice%> </strong></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                     
+                    <div class="border p-3 mb-3">
+             
+                      <input type="radio" id="cod" name="payment" value="COD" checked>Cash On Delivery
+
+                    </div>
+
+                    <div class="border p-3 mb-3">
+                      <input type="radio" id="pay_pal" name="payment" value="pay_pal">Pay Pal                    
+                    </div>
+                    <div class="form-group">
+                      <button class="btn btn-dark btn-lg py-3 btn-block">Continue to payment</button>
+                  
+                    </div>
+                  </form>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+                 
+        </div>
+      </div>
+
+<script>
+function  displayAddress(id){
+
+  $.ajax({
+
+    type:'get',
+    url:'/change_address',
+    data:{
+      id:id
+    },
+    success:(res)=>{
+        if(res.success){
+           document.getElementById('name').value=res.user[0].address.name
+          document.getElementById('email').value=res.user[0].address.email
+          document.getElementById('number').value=res.user[0].address.mobile
+          document.getElementById('addresss').value=res.user[0].address.address
+          document.getElementById('zipcode').value=res.user[0].address.zip_code
+
+
+
+        }
+
+    }
+  })
+   
+  }
+
+
+
+
+   
+  function applyCoupon(){
+
+    let coupon= document.getElementById('coupon').value
+   
+
+    $.ajax({
+      type:'post',
+      url:'/coupon',
+      data:{
+         coupon:coupon
+      },
+      success:(res)=>{ 
+        
+        if(res.discount && res.couponId &&res.total)
+        {
+       
+          document.getElementById('discount').innerHTML=res.discount
+          document.getElementById('total').innerHTML= parseInt(res.total)
+          document.getElementById('couponId').value=res.couponId
+
+       }
+
+        if(res.message){
+          
+          document.getElementById('message').innerHTML=res.message
+        
+        
+        }
+      
+      
+        
+      }
+    })
+  }
+    
+   
+  
+</script>
+
+
+<%-include('../partials/footer.ejs') %>

@@ -1,0 +1,123 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<style>
+  table{
+
+    margin-top: 25px;
+  }
+  h4{
+
+    margin-top: 30px;
+    margin-left: 10px;
+  }
+  th{
+ text-align: start;
+  
+  }
+  .total{
+
+    margin-top: 40px;
+    
+
+   
+  }
+
+  h4 b{
+    border-bottom: 2px solid black;
+    width: 30%;
+  }
+  .total div{
+    margin-right: 115px;
+    width: 225px;
+    height: 180px;
+    background: rgb(244, 244, 244)
+  }
+  .card{
+
+    width: 25%;
+    border: none;
+    
+  }
+  h6{
+
+    margin-left: 10px;
+  }
+
+</style>
+<body>
+<% const date = new Date()%>
+
+<%let day = date.getDate()%>
+<%let month = date.getMonth() + 1;%>
+<%let year = date.getFullYear();%>
+<%let currentDate = `${day}-${month}-${year}`; %> 
+
+   <h4>SALES REPORT</h4>
+   <h6>Date: <%=currentDate%></h6>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">User</th>
+          <th scope="col">Product</th>
+          <th scope="col">Date</th>
+          <th scope="col">Payment Type</th>
+          <th scope="col">Coupon Applied</th>
+          <th scope="col">Total Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%if(productData) { %> 
+           
+          <% productData.forEach(function(productData,i){ %> 
+        <tr scope="row">
+          
+          <td><%=productData.user.name%></td>
+          <td>   <% for(i=0;i<productData.order_details.product.length;i++) {%> 
+            <b>Name:</b><%=productData.order_details.product[i].name%> <br>
+            <b>Price:</b><%=productData.order_details.product[i].product_price%> <br> <br>
+                <% } %>
+            </td>
+            <td><%let date = productData.placedDate%>
+              <%let isoString = date.toISOString()%>
+              <%let newDate = isoString.split('T')[0]%>
+              <%=newDate%></td>
+          <td><%=productData.payment_type%></td>
+          <td><%=productData.couponApplied%> </td>
+          <td><%=productData.total_price%> </td>
+         
+        </tr>
+      
+        <% })} %> 
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-end">
+      <div class="card">
+        <div class="card-header">
+          <h3>Total</h3>
+        </div>
+        <div class="card-body">
+          <h4 class="card-title">&#8377;  <% if(total_price.length>0)  {%>  <%=total_price[0].total%> <% } %></h4>
+        </div>
+      </div>
+    </div>
+   
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"></script>
+
+
+
+
+</body>
+
+</html>

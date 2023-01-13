@@ -1,0 +1,59 @@
+<%-include('./partial/header.ejs')%>
+
+<h3>Edit Coupon</h3>
+<div class="container mt-3 d-flex justify-content-center ">
+
+    <form class="border border-dark p-4 border-3" action="" method="POST">
+        <div class="row mb-4">
+            <p class="text-center">
+
+            </p>
+
+            <div class="col">
+                <div class="form-group">
+                    <label class="form-label" for="form3Example1">Name</label>
+                    <input type="text" id="form3Example1" class="form-control" name="name" value="<%=couponData.name%>" />
+
+                </div>
+            </div>
+              
+          
+          
+        </div>
+
+
+
+        <div class="row mb-4">
+            <div class="col">
+                <div class="form-group">
+                    Discount <input type="number" id="form3Example2" min="1" class="form-control" name="discount" value="<%=couponData.discount%>" />
+                </div> 
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    Min Amount <input type="number" id="form3Example2" min="1" class="form-control" name="min_amount"  value="<%=couponData.min_amount%>"/>
+                </div>
+            </div>
+            
+        </div>
+        <div class="row mb-4">
+           
+            <div class="col">
+                <div class="form-group">
+                    <%let exprDate=couponData.expiresIn  %> 
+                    <%let String = exprDate.toISOString()%>
+                    <%let expireDate = String.split('T')[0]%>
+                   Expiry Date <input type="date" id="form3Example2" min="1" class="form-control" name="expire_date" value="<%=expireDate%>"  />
+                </div> 
+            </div>
+        </div>
+       <br>
+        <div class="text-center">
+            <input type="hidden" name="id"id value="<%=couponData._id%>">
+            <input type="submit" value="Update" name="add" class="btn btn-success">
+
+        </div>
+        <a href="/admin/coupon">Back</a>
+    </form>
+</div>
+<%-include('./partial/footer.ejs')%>

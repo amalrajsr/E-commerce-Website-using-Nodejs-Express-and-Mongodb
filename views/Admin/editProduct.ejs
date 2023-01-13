@@ -1,0 +1,99 @@
+
+<%-include('./partial/header.ejs')%>
+
+
+<h3>Edit Product</h3>
+<div class="container mt-3 d-flex justify-content-center ">
+
+     
+    <form class="border border-dark p-4 border-3" action="/admin/edit_product" method="POST" enctype="multipart/form-data">
+        <div class="row mb-4">
+            <p class="text-center">
+                <%=locals.wrong %>
+            </p>
+
+            <div class="col">
+                <div class="form-group">
+                    <label class="form-label" for="form3Example1">Name</label>
+                    <input type="text" id="form3Example1" class="form-control" name="name" value="<%=productData[0].name%>" />
+
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="form-group">
+                    <label class="form-label" for="form3Example2">Author</label>
+                    <input type="text" id="form3Example2" class="form-control" name="author" value="<%=productData[0].author%>"/>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row mb-4">
+            <div class="col">
+                <div class="form-group">
+                    <label for="Category">Category</label>
+                    <% if(categoryData!=null) {%> 
+                    <select class="form-control" id="Category" name="category" required>
+                        <option><%=productData[0].category[0].category_name%></option>
+                        <% categoryData.forEach(function(categoryData){ %> 
+                        <option><%=categoryData.category_name%></option>
+                        <% }) } %> 
+                        
+
+                    </select>
+                </div>
+                <div class="form-group">
+
+                    Product Price<input type="number" id="form3Example1" min="50" class="form-control" name="product_price" value="<%=productData[0].product_price%>"/>
+
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    Stock <input type="number" id="form3Example2" min="1" class="form-control" name="stock" value="<%=productData[0].stock %>" />
+                </div>
+                <div class="form-group">
+                    <label for="status">Staus</label>
+                    <select class="form-control" id="status" name="status">
+                        <option>In Stock</option>
+                        <option>Out of Stock</option>
+                        </select>
+                        </div>
+                
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="flag">Flag</label>
+            <select class="form-control" id="flag" name="flag">
+                <option><%=productData[0].flag %> </option>
+                <option></option>
+                <option>Best Seller</option>
+                <option>X-mas Deal</option>
+                <option>New</option>
+
+            </select>
+        </div>
+        <div class="form-group">
+        <input type="file" class="form-control-file" id="file-upload" name="image" accept='image/*' value="/Admin/assets/product/<%=productData[0].image%>" multiple >  
+
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Description</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description" ><%=productData[0].description%></textarea>
+        </div>
+        <br>
+        <div class="text-center">
+            <input type="submit" value="Edit Product" name="add" class="btn btn-success">
+
+        </div>
+        <input type="hidden" name="id" value="<%=productData[0]._id%>">
+        <a href="/admin/product">Back</a>
+    </form>
+</div>
+
+
+
+<%-include('./partial/footer.ejs')%>

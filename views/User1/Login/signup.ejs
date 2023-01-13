@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up Form</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="./User/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="User/css/login.css">
+</head>
+<body>
+
+<div class="container login-box">
+
+        <!-- Sign up form -->
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="signup-form">
+                        <%=locals.message %> 
+                        <h2 class="form-title">Sign up</h2>
+                        <form method="POST" action="/signup" class="register-form" id="register-form"> 
+                           
+                            <div class="form-group">   
+                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" name="name" id="name" placeholder="Your Name" required/>
+                                <span id="usererror" class="text-danger font-weight-bold"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="email"><i class="zmdi zmdi-email"></i></label>
+                                <input type="email" name="email" id="email" placeholder="Your Email" required/>
+                                <span id="emailerror" class="text-danger font-weight-bold"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="password" id="pass" class="pswrd" placeholder="Password" accept='/^[a-zA-Z0-9!@#$%^&*]{6,16}$/'' required/>
+                                <span id="passworderror" class="text-danger font-weight-bold"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
+                                <input type="password" name="re_password" min="4"  class="pswrd" id="re_pass" placeholder="Repeat your password" required/>
+                               
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" onclick="showPassword()" />
+                                <label for="agree-term" class="label-agree-term"><span><span></span></span>Show  </label>
+                            </div>
+                            <div class="form-group form-button">
+                                <input type="submit" name="signup" id="signup" class="form-submit" value="Register"  />
+                            </div>
+                        </form>
+                    </div>
+                    <div class="signup-image">
+                        <figure><img src="./User/img/signup.jpg" alt="sign up image"></figure>
+                        <a href="/login" class="signup-image-link">I am already member</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    
+
+</div>  
+<script>
+  
+        // document.getElementById("register-form").addEventListener("submit",function(e){
+        //     e.preventDefault()
+
+        //     let user= document.getElementById('name').value
+        // let email= document.getElementById('email').value
+        // let password= document.getElementById('pass').value
+
+        // passCheck=/^[a-zA-Z0-9!@#$%^&*]{6,16}$/
+        // emailCheck=/^\w+@\w+\.\w+$/
+
+        // if(emailCheck.test(email)){
+        //     document.getElementById('emailerror').innerHTML=''
+        // }
+        // else{
+        //     document.getElementById('emailerror').innerHTML='Enter a valid email'
+
+        // }
+
+
+        // if(passCheck.test(password)){
+        //     document.getElementById('passworderror').innerHTML=''
+        // }
+        // else{
+        //     document.getElementById('passworderror').innerHTML='minimum 6 letters needed'
+
+        // }
+        // })
+
+        
+   
+    
+    
+</script>      
+<script>
+    function showPassword() {
+
+        let x = document.getElementById("pass")
+
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+
+    }
+   
+//         function validate() {
+  
+//   var user = document.getElementById("email").value;
+//   var user2 = document.getElementById("email");
+//   var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+//   if (re.test(user)) {
+//       return true;
+//   }
+//   else {
+//       user2.style.background = "red ";
+//       return false;
+//   }
+// }
+    
+</script>
+</body>
+</html>

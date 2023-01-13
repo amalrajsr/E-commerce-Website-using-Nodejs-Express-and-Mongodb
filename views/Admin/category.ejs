@@ -1,0 +1,84 @@
+<%-include('./partial/header.ejs')%>
+<style>
+.heading{
+
+  margin-top: 20px;
+  margin-left: 10px;
+}
+</style>
+
+
+
+<p class="mt-3 m-s2 h3 heading">CATEGORY MANAGEMENT</p><br><br>  
+
+<!-- -------------------------------------------Search Bar----------------------------------------------------- -->
+  
+  <div class="container d-flex justify-content-between">
+   
+    <a href="/admin/add_Category" class="open-button btn btn-outline-success" >Add Category</a>
+    <form class="d-inline">
+     <input type="text" name="search" id="" placeholder=" search category">
+      
+     <% if(value==true) {%> 
+      <button class="btn btn-outline-dark btn-sm" value="search" >Back</button>
+      <% }else{ %>
+       <button class="btn btn-outline-dark btn-sm" value="search" >search</button>
+       <% } %> 
+  </form>
+  </div> <br><br>
+
+
+
+
+
+
+<!-- ------------------------------------------Search Bar ends------------------------------------------------- -->
+
+<!-- ------------------------------------------Table------------------------------------------------- -->
+<div class="container">
+<% if(categoryData!=null) {%> 
+<table class="table table-bordered" id="category">
+  <thead>
+    <tr>  
+      <th scope="col">Category Name</th>
+      <!-- <th scope="col">Category Image</th> -->
+      <th></th>
+      <th scope="col">Status</th>
+      <div class="col"></div>
+    </tr>
+  </thead>
+  <tbody>
+    <% categoryData.forEach(function(categoryData){ %> 
+    <tr> 
+      <td><%=categoryData.category_name%> </td>
+      <% if (categoryData.isBlocked==false) { %> 
+      <td class="text-center"><a href="block_category?id=<%=categoryData._id%>" class="btn btn-outline-primary ms-2 mt-4">List</a><a href="/admin//edit_Category?id=<%=categoryData._id%>" class="btn btn-outline-primary ms-2 mt-4">Edit</a></td>
+      <% } else {%> 
+        <td class="text-center"><a href="block_category?id=<%=categoryData._id %>" class="btn btn-outline-primary ms-2 mt-4">Unlist</a><a href="/admin//edit_Category?id=<%=categoryData._id%>" class="btn btn-outline-primary ms-2 mt-4">Edit</a></td>
+      <% } %> 
+
+
+      <% if (categoryData.isBlocked==false) { %> 
+
+      <td><span class="mt-5 text-success">Active</span> </td>
+
+      <% } else {%> 
+
+        <td ><span class="mt-5 text-danger"> Blocked</span></td>
+
+        <% } %> 
+        
+     <% }) %>    
+    </tr>
+    
+  </tbody>
+</table>
+<% }  %>
+</div>
+<!-- ------------------------------------------Table Ends------------------------------------------------- -->
+
+
+<!-- js for add category form -->
+
+
+<%-include('./partial/footer.ejs')%>

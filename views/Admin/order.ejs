@@ -1,0 +1,139 @@
+<%-include('./partial/header.ejs') %>
+<div class="container-fluid px-4 mt-5">
+  <div class="card mb-4">
+    <div class="card-header">
+      <i class="fas fa-table me-1"></i>
+      Order Page
+    </div>
+    <div class="card-body">
+      <table id="datatablesSimple">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Product</th>
+            <th>Date</th>
+            <th>Items</th>
+            <th>Address</th>
+            <th>Status</th>
+            <th>Payment Type</th>
+            <th>Coupon Applied</th>
+            <th>Total Price</th>
+            <th>Change Order Status</th>
+           
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>User</th>
+            <th>product</th>
+            <th>Date</th>
+            <th>quantity</th>
+            <th>Address</th>
+            <th>Status</th>
+            <th>Payment Type</th>
+            <th>Total Price</th>
+            
+            <th></th>
+          </tr>
+        </tfoot>
+        <tbody>
+          <% let totalQuantity=0 %> 
+          <%if(productData) { %> 
+           
+            <% productData.forEach(function(productData){ %> 
+             
+
+               
+          <tr>
+                 
+            <td><%=productData.user.name%>  </td>
+            <td>
+                     <%price=0%> 
+                <% for(i=0;i<productData.order_details.length;i++) {%> 
+                   <b>Name:</b><%=productData.product[i].name%> <br>
+                   <b>Price:</b><%=productData.product[i].product_price %> X   
+                              <%=productData.order_details[i].quantity%>
+                            <%price=productData.product[i].product_price * productData.order_details[i].quantity%> 
+                            = <%=price%> <br>
+                    <br>
+                       <% } %> 
+
+             </td>
+             <td><%let date = productData.placedDate%>
+              <%let isoString = date.toISOString()%>
+              <%let newDate = isoString.split('T')[0]%>
+              <%=newDate%></td>
+               <td><%=productData.product.length%>  </td>
+            <td>
+              
+              <b>Name:</b>  <%=productData.address.name%> <br>
+              <b>Email:</b> <%=productData.address.email%> <br>
+              <b>Mobile:</b> <%=productData.address.mobile%> <br>
+              <b>Address:</b> <%=productData.address.address%>  
+                   
+            </td>
+           
+            <td> <span data-bs-toggle="collapse" data-bs-target="#collapseExample<%=i%> " aria-expanded="false" aria-controls="collapseExample" id="<%=productData._id%>"> <%=productData.status%></span>
+             
+          </td>
+            <td><%=productData.payment_type%></td>
+            <td><%=productData.couponApplied%> </td>
+            <td><%=productData.total_price%> </td>
+          <td id="order-status-td">
+            <%if( productData.status=='delivered' ||productData.status=='cancelled') {%>
+          
+               <% } %> 
+                <% if(productData.status=='shipped') { %> 
+                  <button   onclick="change_order_status('<%=productData._id%>','Out for delivery')" class="list-group-item list-group-item-action">Out For Delivery</button>
+                  <button  onclick="change_order_status('<%=productData._id%>','delivered')" class="list-group-item list-group-item-action">Deliverd</button>
+                  <button  onclick="change_order_status('<%=productData._id%>','cancelled')" class="list-group-item list-group-item-action">Cancelled</button> 
+
+                  <% }%> 
+                  <% if(productData.status=='Out for delivery') { %> 
+                    <button  onclick="change_order_status('<%=productData._id%>','delivered')" class="list-group-item list-group-item-action">Deliverd</button>
+                    <% } %> 
+                    <% if(productData.status=='pending'){ %> 
+                      <div>
+                        <button   onclick="change_order_status('<%=productData._id%>','shipped')" class="list-group-item list-group-item-action">Shipped</button>
+                        <button   onclick="change_order_status('<%=productData._id%>','Out for delivery')" class="list-group-item list-group-item-action">Out For Delivery</button>
+                        <button  onclick="change_order_status('<%=productData._id%>','delivered')" class="list-group-item list-group-item-action">Deliverd</button>
+                        <button  onclick="change_order_status('<%=productData._id%>','cancelled')" class="list-group-item list-group-item-action">Cancelled</button> 
+                        <button  onclick="change_order_status('<%=productData._id%>','pending')" class="list-group-item list-group-item-action">Pending</button>
+                        </div>
+                      <% } %> 
+          </td>
+            <!-- <td><a href="" class="btn btn-outline-success"> Cancel</a> <a href="" class="btn btn-outline-primary">Delivered</a>
+            </td> -->
+          </tr>
+          
+          <% })} %> 
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+<script>
+  function change_order_status(orderId,status){
+
+     $.ajax({
+    
+      type:'post',
+      url:'/admin/order',
+      data:{
+        id:orderId,
+        status:status
+      },
+      success:(res)=>{
+           if(res.status){
+           
+           document.getElementById(orderId).textContent=status
+           location.reload()
+           }
+        console.log(res)
+      }
+     })
+  }
+</script>
+<%-include('./partial/footer') %>

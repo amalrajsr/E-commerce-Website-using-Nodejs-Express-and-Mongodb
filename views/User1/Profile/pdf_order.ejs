@@ -1,0 +1,101 @@
+
+<link href="User/css/style.css" rel="stylesheet">
+      
+<div class="container">
+    <div class="row mb-2 mt-4 rounded border p-3">
+      <div class="col-lg-10 mx-auto" id="invoice">
+          <!-- <a class="navbar-brand d-flex align-items-center justify-content-center mt-2 mb-4" href="/order_invoice?id=<%=//orderData[0]._id%>"> -->
+            <%let date = orderData[0].placedDate%>
+            <%let isoString = date.toISOString()%>
+            <%let newDate = isoString.split('T')[0]%>
+              <!-- <div class="brand-name ms-3">
+                <span class="mr-2">Invoice</span><i class="fas fa-download" aria-hidden="true"></i>
+              </div>
+            </a> -->
+          <div class="name mb-2 row" style="border-bottom: 1px solid #dbdbdb; font-size: 0.8rem;">
+              <span class="col-lg-8 my-1">Order ID:<%=orderData[0]._id%></span>
+              <span class="col-lg-4 my-1">Ordered On:<%=newDate%></span>
+          </div>
+        <div class="user-details my-3">
+          <h6 class="border-bottom pb-2">Products:</h6>
+       <%let totalQuantity=0  %> 
+       <%let price_before_discount=0   %> 
+       <%for(i=0;i<orderData[0].product.length;i++) { %> 
+        <div class="product-details d-flex justify-content-between pb-1 px-5" style="border-bottom: 1px solid #dbdbdb" >
+          <span></span>
+          <span class="flex-grow-1 mx-3"><%=orderData[0].product[i].name%> </span>
+          <span><span style="text-transform: none;">x</span><%=orderData[0].order_details[i].quantity%> </span>
+          <%totalQuantity=totalQuantity+orderData[0].order_details[i].quantity  %> 
+          <%price_before_discount=price_before_discount+ (orderData[0].product[i].product_price * orderData[0].order_details[i].quantity)%> 
+        </div>
+        <% } %> 
+      </div>
+  
+      <div class="address my-2">
+          <h6>Address:</h6>
+          
+            <p class="px-1" style="text-transform: none;">Name:<%=orderData[0].address.name  %></p>
+            <p class="px-1" style="text-transform: none;">Email:<%=orderData[0].address.email  %> </p>
+            <p class="px-1" style="text-transform: none;">Mobile:<%=orderData[0].address.mobile  %> </p>
+            <p class="px-1" style="text-transform: none;">Zip Code: <%=orderData[0].address.zip_code %> </p>
+            <p class="px-1" style="text-transform: none;">Address: <%=orderData[0].address.address%></p>
+
+
+      </div>
+  
+        <div class="row my-2 line-break">
+          
+     
+  
+          <div class="col-lg-6 my-2 px-3">
+              <span class="d-flex justify-content-between">
+                  <h6>
+                      Products Quantity: <%=totalQuantity %> 
+                  </h6>
+                  <span>
+                  </span>
+              </span>
+              <span class="d-flex justify-content-between">
+                  <h6>
+                      Payment: <%=orderData[0].payment_type%> 
+                  </h6>
+                  <span>
+                  </span>
+              </span>
+              <span class="d-flex justify-content-between">
+                  <h6>
+                      Coupon Used:<%=orderData[0].couponApplied%> 
+                  </h6>
+                  <span>
+                  </span>
+              </span>
+          </div>
+          <div class="col-lg-6 my-2 px-3">
+              <span class="d-flex justify-content-between">
+                  <h6>
+                      Price: <%=price_before_discount %> 
+                  </h6>
+                  <span>
+                  </span>
+              </span>
+              <span class="d-flex justify-content-between">
+                  <h6>
+                      Discount Price:<% if(orderData[0].discount) {%>  <%=orderData[0].discount%> <% } %> 
+                  </h6>
+                  <span>
+                  </span>
+              </span>
+              <span class="d-flex justify-content-between">
+                  <h6>
+                      Bill Amount:<%=orderData[0].total_price%> 
+                  </h6>
+                  <span>
+                  </span>
+              </span>
+          </div>
+</div>
+</div>
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
