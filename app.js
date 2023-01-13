@@ -34,7 +34,7 @@ app.use('/admin',adminRouter)
 
 
 // for adding external files to view engine
-const staticPath=path.join(__dirname,'public1')
+const staticPath=path.join(__dirname,'public')
 app.use(express.static(staticPath))
 
 
