@@ -14,7 +14,7 @@
                         <th>Remove</th>
                     </tr>
                 </thead>
-                <tbody class="align-middle">
+                <tbody class="align-middle" id="wishlsit-table">
                     <% Wishlist.forEach(function(wishlist){ %> 
 
                     <tr>
@@ -24,7 +24,7 @@
                         <td class="align-middle">
                             <div class="input-group quantity mx-auto" style="width: 100px;">
                                 <div class="input-group-btn">
-                                    <button class="btn btn-sm second-bg font-weight-bold rounded" onclick="addToCart('<%=wishlist.product._id%>')" >Add to Cart
+                                    <button class="btn btn-sm second-bg font-weight-bold rounded " id="wishlist-btn" onclick="addToCart('<%=wishlist.product._id%>')" >Add to Cart
                                     </button>
                                 </div>
                                 
@@ -90,6 +90,7 @@
             success:(res)=>{
                if(res.success){
                 console.log(res)
+                $("#wishlist-btn").load(location.reload() + " #wishlist-table");
                 const Toast = Swal.mixin({
   toast: true,
   position: 'top-end',
@@ -102,10 +103,12 @@
   }
 })
 
+
 Toast.fire({
   icon: 'success',
   title: 'Item added to cart'
 })
+
     }
 
 

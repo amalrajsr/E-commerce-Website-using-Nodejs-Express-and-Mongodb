@@ -18,7 +18,7 @@ async function userActive(jwt, id) {
   }
 
   async function cartAndWishlist(id) {
-    let cart=null,wishlist=null,cartCount=0,wishlistCount
+    let cart=null,wishlist=null,cartCount=0,wishlistCount=0
     if ( id) {
       cart=await cartCollection.aggregate([{$match:{user:mongoose.Types.ObjectId(id)}}])
       wishlist=await wishlistCollection.aggregate([{$match:{user:mongoose.Types.ObjectId(id)}}])

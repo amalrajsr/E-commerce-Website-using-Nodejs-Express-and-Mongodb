@@ -38,28 +38,19 @@
         <div class="col-xl-3 col-md-6">
             <div class="card  total-sale text-white mb-4">
                  <div class="card-body">Total Revenue:<h3>&#8377; <% if(total_price.length>0)  {%>  <%=total_price[0].total%> <% } %> </h3></div>
-                <div class="card-footer d-flex align-items-center">
-                    <a class="small text-white text-decoration-none" href="/admin/sales_report_pdf">Download Sales Report in PDF</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div> 
-                </div> 
+              
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="card order text-white mb-4">
                 <div class="card-body">Total Orders: <h3><%=order.length%> </h3></div>
-                <div class="card-footer d-flex align-items-center">
-                    <a class="small text-white stretched-link text-decoration-none" href="/admin/sales_report_csv">Download Sales Report in CSV</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
+               
             </div>
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="card user text-white mb-4">
                 <div class="card-body">Total Users: <h3><%=user.length%> </h3></div>
-                <div class="card-footer d-flex align-items-center ">
-                    <a class="small text-white text-decoration-none" href="/admin/sales_report_xl">Download Sales Report in XL</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
+               
             </div>
         </div>
         <!-- <div class="col-xl-3 col-md-6">
@@ -104,7 +95,7 @@
                 <div class="card-header d-flex justify-content-between">
                   <%let date = new Date().getFullYear();%>
                   
-                    <span class="">Bar Revenue Chart of <%=year%> </span>
+                    <span class="">Bar Revenue Chart of <b> <%=year%></b> </span>
                     <form action="" method="post">
                      <span class="mx-3"> Enter the year: <input type="number" placeholder="YYYY" min="1999" max="<%=date%>" name="year" value="<%=date%>">
                       <button class="btn-sm border border-0  " style="background: #e1dfdf;">submit</button>

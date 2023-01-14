@@ -96,28 +96,17 @@ const sort_sales_report_download= async(req,res)=>{
 
     
     req.session.sale= req.body
-
-    console.log(typeof(+req.body.from));
-    let start= +req.body.from
-    let end=+req.body.to
-   // console.log(ISODate(start));
     
-    let salesDate= req.body
-    const user= await orderCollection.aggregate([{$match:{DeliveredDate:{$gte:new Date(start),$lte:new Date(end)}}}])
-    const total= await orderCollection.find({DeliveredDate:{$gte:salesDate.from,$lte:salesDate.to}})
-  console.log(user);
-    res.redirect('back')
-    
-    // if(req.body.type=='pdf'){
+    if(req.body.type=='pdf'){
 
-    //    res.redirect('sales_report_pdf')
-    // }else if(req.body.type=='excel'){
+       res.redirect('sales_report_pdf')
+    }else if(req.body.type=='excel'){
 
-    //     res.redirect('sales_report_xl')
-    // }else{
+        res.redirect('sales_report_xl')
+    }else{
 
-    //     res.redirect('sales_report_csv')
-    // }
+        res.redirect('sales_report_csv')
+    }
 
 
 }
@@ -126,13 +115,29 @@ async function reportPdfDownload(req,res){
 
     try{
 
-    let salesDate= req.session.sale
-
+    let salesDate= req.session.sale 
+    let start= new Date (salesDate.from)
+    let end= new Date (salesDate.to)
    
 
-    const total_price=await orderCollection.aggregate([{$match:{status:"delivered"}},{$group:{_id:null,total:{$sum:'$total_price'}}}])
+    const total_price=await orderCollection.aggregate([   { 
+        $match: { 
+            $and: [
+                { DeliveredDate: { $gte:start } },
+                { DeliveredDate: { $lte:end } }
+            ]
+        } 
+    },{$group:{_id:null,total:{$sum:'$total_price'}}}])
+
     const productData= await orderCollection.aggregate([
-            {$match:{status:'delivered'}},
+        { 
+            $match: { 
+                $and: [
+                    { DeliveredDate: { $gte:start } },
+                    { DeliveredDate: { $lte:end } }
+                ]
+            } 
+        },
             {$lookup:{from:'products',localField:"order_details.product",foreignField:"_id",as:"order_details.product"}},
             {$lookup:{from:'users',localField:"user",foreignField:"_id",as:"user"}},
             {$unwind:"$user"}
@@ -177,7 +182,7 @@ async function reportPdfDownload(req,res){
             
         })
   
-        
+        req.session.sale=''
 
     }catch(error){
 
@@ -190,14 +195,34 @@ const reportXlDownload= async(req,res)=>{
 
     try{
 
-        const total_price=await orderCollection.aggregate([{$match:{status:"delivered"}},{$group:{_id:null,total:{$sum:'$total_price'}}}])
+        let salesDate= req.session.sale 
+        let start= new Date (salesDate.from)
+        let end= new Date (salesDate.to)
+        
+    const total_price=await orderCollection.aggregate([   { 
+        $match: { 
+            $and: [
+                { DeliveredDate: { $gte:start } },
+                { DeliveredDate: { $lte:end } }
+            ]
+        } 
+    },{$group:{_id:null,total:{$sum:'$total_price'}}}])
 
-
-         orderData= await orderCollection.aggregate([
-            {$match:{status:"delivered"}},
+    const orderData= await orderCollection.aggregate([
+        { 
+            $match: { 
+                $and: [
+                    { DeliveredDate: { $gte:start } },
+                    { DeliveredDate: { $lte:end } }
+                ]
+            } 
+        },
             {$lookup:{from:'products',localField:"order_details.product",foreignField:"_id",as:"order_details.product"}},
             {$lookup:{from:'users',localField:"user",foreignField:"_id",as:"user"}},
-            {$unwind:"$user"}])
+            {$unwind:"$user"}
+        ])
+
+
             let counter=1
         
             const workbook= new exceljs.Workbook()
@@ -220,7 +245,7 @@ const reportXlDownload= async(req,res)=>{
 
              orderData.forEach(function(order){
                  
-                let date= order.placedDate
+                let date= order.DeliveredDate
                 let isoString = date.toISOString()
                 let newDate = isoString.split('T')[0]
                 order.s_no=counter
@@ -257,13 +282,34 @@ const reportXlDownload= async(req,res)=>{
 const reportCsvDownload= async(req,res)=>{
 
     try{
-         orderData= await orderCollection.aggregate([
-            {$match:{status:"delivered"}},
-            {$lookup:{from:'products',localField:"order_details.product",foreignField:"_id",as:"order_details.product"}},
-            {$lookup:{from:'users',localField:"user",foreignField:"_id",as:"user"}},
-            {$unwind:"$user"}])
-           
-           
+       
+        
+    let salesDate= req.session.sale 
+    let start= new Date (salesDate.from)
+    let end= new Date (salesDate.to)
+
+        const total_price=await orderCollection.aggregate([   { 
+            $match: { 
+                $and: [
+                    { DeliveredDate: { $gte:start } },
+                    { DeliveredDate: { $lte:end } }
+                ]
+            } 
+        },{$group:{_id:null,total:{$sum:'$total_price'}}}])
+    
+        const orderData= await orderCollection.aggregate([
+            { 
+                $match: { 
+                    $and: [
+                        { DeliveredDate: { $gte:start } },
+                        { DeliveredDate: { $lte:end } }
+                    ]
+                } 
+            },
+                {$lookup:{from:'products',localField:"order_details.product",foreignField:"_id",as:"order_details.product"}},
+                {$lookup:{from:'users',localField:"user",foreignField:"_id",as:"user"}},
+                {$unwind:"$user"}
+            ])
 
             let counter=1
         
@@ -305,6 +351,8 @@ const reportCsvDownload= async(req,res)=>{
 
                 res.status(200)
              })
+
+             
 
     }catch(error){
 

@@ -11,7 +11,8 @@
           <tr>
             <th>User</th>
             <th>Product</th>
-            <th>Date</th>
+            <th>Placed Date</th>
+            <th>Delivered Date</th>
             <th>Items</th>
             <th>Address</th>
             <th>Status</th>
@@ -26,7 +27,8 @@
           <tr>
             <th>User</th>
             <th>product</th>
-            <th>Date</th>
+            <th> Placed Date</th>
+            <th>Delivered Date</th>
             <th>quantity</th>
             <th>Address</th>
             <th>Status</th>
@@ -63,7 +65,17 @@
               <%let isoString = date.toISOString()%>
               <%let newDate = isoString.split('T')[0]%>
               <%=newDate%></td>
-               <td><%=productData.product.length%>  </td>
+
+
+                 <td> <%if(productData.DeliveredDate)  {%> 
+             <%let deliveredDate = productData.DeliveredDate%>
+                <%let isoString = deliveredDate.toISOString()%>
+                <%let newDeliveredDate = isoString.split('T')[0]%>
+              <%=newDeliveredDate%>
+              <% } %> </td>
+
+
+            <td><%=productData.product.length%>  </td>
             <td>
               
               <b>Name:</b>  <%=productData.address.name%> <br>
