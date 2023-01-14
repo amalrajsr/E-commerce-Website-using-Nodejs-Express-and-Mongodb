@@ -31,7 +31,7 @@
                                     </button>
                                 </div>
                                 <!-- <span class="m-2" id="<%=//cart.product._id%>"><%=//cart.quantity%></span> -->
-                                <input type="text" id="<%=cart.product._id%>" class="form-control form-control-sm footer-text text-center" value="<%=cart.quantity%>">
+                                <input type="text" id="<%=cart.product._id%>" class="form-control form-control-sm footer-text text-center" value="<%=cart.quantity%>" disabled>
 
                                 <div class="input-group-btn">
                                     <button class="btn btn-sm  btn-plus  btn-transparent text-decoration-none " onclick="changeQuantity('<%=userStatus._id%>','<%=cart.product._id%>',1,'<%=cart.quantity%>')">

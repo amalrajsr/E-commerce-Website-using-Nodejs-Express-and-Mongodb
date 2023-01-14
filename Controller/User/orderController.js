@@ -59,12 +59,11 @@ const checkoutPage= async(req,res)=>{
         let cart=await cartCollection.findOne({user:req.cookies.id}).populate('cart_items.product')
         CartItems=cart.cart_items
         const coupon= await couponCollection.find()
-    // let coupon=await userCollection.aggregate([{$match:{_id:mongoose.Types.ObjectId(req.cookies.id)}},
-    //                                            {$unwind:"$usedCoupon"},
-    //                                          {$project:{usedCoupon:1}}
-    // ])
-
+       if(CartItems.length>0){
         res.render('../views/User1/Order/checkout',{userStatus,cartWishlist,address,CartItems,coupon})
+       }else{
+        res.redirect('/products')
+       }
 
     }catch(error){
 

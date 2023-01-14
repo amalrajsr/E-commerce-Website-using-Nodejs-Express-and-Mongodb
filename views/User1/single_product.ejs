@@ -65,14 +65,14 @@
                         <a href="/wishlist" class=" btn mt-2 mr-2 rounded text-decoration-none border" id="wishlist-link" ><i class="fa fa-heart" > Go to wishlist</i></a>
                         <% }else { %> 
                         <button id="wishlist-btn" class="btn  btn-sm rounded cart  mr-2 " onclick="add_to_wishlist('<%=productData[0]._id%>')">
-                            <i class="fa fa-heart rounded"> Add to wishlist</i>
+                            <i class="fa fa-heart rounded border"> Add to wishlist</i>
                         </button>
                         <% } %> 
                            <!-- <input type="hidden" name="id" value="<%=//productData[0]._id%>"> -->
                            <% if(itemExist){ %> 
-                            <a href="/cart" class=" btn btn-md  mt-2 rounded " id="cart-link"><i class="fa fa-shopping-cart " > Go to cart</i></a>
+                            <a href="/cart" class=" btn btn-md  mt-2 rounded border" id="cart-link"><i class="fa fa-shopping-cart " > Go to cart</i></a>
                             <% } else { %> 
-                            <button id="cart-btn" class="btn  btn-sm rounded cart " onclick="addToCart('<%=productData[0]._id%>')">
+                            <button id="cart-btn" class="btn  btn-sm rounded cart border" onclick="addToCart('<%=productData[0]._id%>')">
                                 <i class="fa fa-shopping-cart mt-2" > Add to cart</i>
                             </button>
                             <% } %> 
@@ -84,6 +84,39 @@
         
   </div>
 </div>
+
+<!-- --------------------------------------Related products------------------------------------ -->
+<div class="container-fluid py-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title px-5"><span class="px-2">You May Also Like</span></h2>
+    </div>
+    <div class="row px-xl-5">
+        <div class="col">
+            <div class="owl-carousel related-carousel">
+                <% if(relatedProducts){ %> 
+                <%relatedProducts.forEach(function(related){  %> 
+                <div class="card product-item border-0">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                        <a href="/product_view?id=<%=related._id%>">  <img class="img-fluid w-75" src="./Admin/assets/product/<%=related.image%>" alt="product-image"></a>
+                    </div>
+                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        <h6 class="text-truncate mb-3"><%=related.name%> </h6>
+                        <div class="d-flex justify-content-center">
+                            <h6>₹<%=related.product_price%></h6><h6 class="text-muted ml-2"></h6>
+                        </div>
+                    </div>
+                    
+                </div>
+              <% })} %> 
+              
+                
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ---------------------------------------Related products ends-------------------------------- -->
 
 <script src="./User/js/zoom.js"></script>
 <script>

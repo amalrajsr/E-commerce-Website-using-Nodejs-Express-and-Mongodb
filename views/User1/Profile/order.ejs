@@ -64,13 +64,13 @@
                         <% } %> </div>
                         <div class="col-2 mb-3">₹<%=order.total_price%> </div>
                         </div>
-                        <div class="row col-lg-4 justify-content-between">
+                        <div class="row col-lg-4">
                         <div class="col-5  mb-3"><%=order.status%> </div>
-                        <div class="col-3 text-center  mb-3"> <a href="/order_detail?id=<%=order._id%>" ><i class="fas fa-eye text-dark mr-1"></i></a></div>
+                        <div class="col-4 text-center  mb-3"> <a href="/order_detail?id=<%=order._id%>" ><i class="fas fa-eye text-dark mr-1"></i></a></div>
                         <%if(order.status=='Out for delivery' || order.status=='delivered' || order.status=='cancelled') { %> 
         
                         <% }else{ %> 
-                          <div class="col-4 col-sm-4 mb-3"> <a href="/order_cancel?id=<%=order._id%>" class="second-bg rounded text-dark Cancel" id="cancel" > Cancel</a></div>
+                          <div class="col-3  mb-3"> <a href="/order_cancel?id=<%=order._id%>" class="second-bg rounded text-dark Cancel" id="cancel" > Cancel</a></div>
                           <% } %> 
                         </div>
 

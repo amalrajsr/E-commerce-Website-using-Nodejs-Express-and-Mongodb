@@ -225,27 +225,6 @@ const otpVerify = async (req, res) => {
   res.redirect("/login?msg=Successfully Registered Please login");
     }
 
-  //   const otp= await otpCollection.findOne({email:req.cookies.user_mail})
-  //   console.log(req.session.otp)
-  //   res.cookie('user_mail','',{maxAge:"1",httpOnly:true})
-  //   if (nodemailer.MAIL_SETTINGS.otp === userOTP && Date.now() < otp.expiresAt) {
-  //     res.redirect("/login?msg=Successfully Registered Please login");
-  //     const passwordHash = await bcrypt.hash(userData.password, 12);
-  //     const user = new userCollection({
-  //       name: userData.name,
-  //       email: userData.email,
-  //       password: passwordHash,
-  //     });
-  //     await user.save();
-
-  //  //await otpCollection.deleteOne({user_email:userData.email})
-
-  //   } else if(Date.now()>otp.expiresAt) {
-  //     await otpCollection.deleteOne({user_email:userData.email})
-  //     res.render("../views/user/otp", { wrong: "OTP Expired" });
-  //   }else{
-  //     res.render("../views/user/otp", { wrong: "Invalid OTP" });
-  //   }
   
   } catch (error) {
     
@@ -425,7 +404,9 @@ const single_product = async (req, res) => {
     userStatus = await userActive(req.cookies.jwt, req.cookies.id);
     let cartWishlist=await cartAndWishlist(req.cookies.id)
 
-    let itemExist=false, itemInWishlist=false
+     let itemExist=false, itemInWishlist=false
+
+     if(req.cookies.id){
     const itemExistsInCart= await cartCollection.find({$and:[{"cart_items.product":req.query.id},{user:req.cookies.id}]})
     const itemExistsInWishlist= await wishlistCollection.find({$and:[{"productList.product":req.query.id},{user:req.cookies.id}]})
     if(itemExistsInCart.length>0){
@@ -435,6 +416,7 @@ const single_product = async (req, res) => {
      itemInWishlist=true
 
     }
+  }
     const productData = await productCollection.aggregate([
   
       {$match:{_id: mongoose.Types.ObjectId(req.query.id)}},
@@ -442,14 +424,17 @@ const single_product = async (req, res) => {
   
   ])   
   
+  let categoryId=productData[0].category[0]._id
   
+  let relatedProducts= await productCollection.find({category:categoryId,isDeleted:false,_id:{$nin: [req.query.id]}})
   
     res.render("../views/User1/single_product.ejs", {
       userStatus,
       productData,
       itemExist,
       itemInWishlist,
-      cartWishlist
+      cartWishlist,
+      relatedProducts
     });
 
   }catch(error){

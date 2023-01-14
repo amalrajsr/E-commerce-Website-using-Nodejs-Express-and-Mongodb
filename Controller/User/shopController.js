@@ -57,13 +57,13 @@ const product_page= async(req,res)=>{
        
         let search= req.query.search||'' 
         let Sort,productData,filter
-       
         let count=false
         const limit=8
         let page= req.query.page || 1
         let previous=page-1
         let next=+page + 1
         
+        console.log(req.query.category);
 
 
         if(req.query.search){
