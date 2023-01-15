@@ -194,7 +194,7 @@ const otpPageView = (req, res) => {
   try {
 
     let wrong=req.query.wrong
-    res.render("../views/user1/Login/otp",{wrong});
+    res.render("../views/User1/Login/otp",{wrong});
   } catch (error) {
     console.log(error);
     res.redirect('/error')

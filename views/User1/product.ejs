@@ -203,6 +203,17 @@ $.ajax({
         id:id
     },
     success:(res)=>{
+
+        if(response.outOfStock){
+              
+
+              Swal.fire(
+              'oops!',
+             'Product is currently out of stock',
+             'error')
+          }
+
+
        if(res.success){
         console.log(res)
         const Toast = Swal.mixin({
@@ -248,6 +259,8 @@ title: ' cart updated'
 
         
        }
+     
+
     }
 })
 }
