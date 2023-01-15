@@ -88,5 +88,5 @@ user_router.get('/failure',Auth.isUserLogin,block.isBlocked,paymentController.fa
 
 user_router.get('/error',userController.error)
 user_router.get('/404',userController.page_not_found)
-user_router.get('/test',paymentController.test).post('/test',paymentController.testpost)
+//user_router.get('/test',paymentController.test)
 module.exports=user_router

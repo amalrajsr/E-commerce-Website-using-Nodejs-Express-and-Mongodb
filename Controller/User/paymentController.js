@@ -5,7 +5,6 @@ const cartCollection=require('../../Model/cartModel')
 const orderCollection=require('../../Model/orderModel')
 const couponCollection=require('../../Model/couponModel')
 const wishlistCollection=require("../../Model/wishlistModel")
-const adminCollection=require('../../Model/adminModel')
 const mongoose=require('mongoose');
 const { coupon } = require('./couponController');
 
@@ -268,25 +267,11 @@ const test=async (req,res)=>{
     res.render('../views/User1/Order/test.ejs')
 }
 
-const testpost=async(req,res)=>{
 
-  console.log(req.body);
-
-  let admin= new adminCollection({
-
-    name:req.body.name,
-    password:req.body.password
-  })
-  
-  await admin.save()
-  res.redirect('back')
-
-}
 module.exports={
 
     payment,
     failure,
     test,
-    testpost,
     successPage
 }
