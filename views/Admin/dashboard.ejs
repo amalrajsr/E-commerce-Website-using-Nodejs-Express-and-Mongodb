@@ -136,8 +136,8 @@ var myLineChart = new Chart(ctx, {
       label: "Revenue",
       backgroundColor: "rgba(2,117,216,1)",
       borderColor: "rgba(2,117,216,1)",
-      data: [<%=month[0]%>, <%=month[1]%>, <%=month[2]%>, <%=month[3]%>, <%=month[4]%>, <%=month[5]%>, <%=month[6]%>,
-              <%=month[7]%>,<%=month[8]%>,,<%=month[9]%>,<%=month[10]%>,<%=month[11]%>],
+      data: ['<%=month[0]%>', '<%=month[1]%>','<%=month[2]%>', '<%=month[3]%>', '<%=month[4]%>', '<%=month[5]%>', '<%=month[6]%>',
+              '<%=month[7]%>','<%=month[8]%>','<%=month[9]%>','<%=month[10]%>','<%=month[11]%>'],
     }],
   },
   options: {
@@ -182,7 +182,7 @@ var myLineChart = new Chart(ctx, {
           datasets: [{
             label: 'Revenue',
             backgroundColor: ['#007bff', '#C8CDD1', '#ffc107', '#133122','#AD2633'],
-            data: [<%=orderPending%>,<%=orderShipped%>,<%=orderOutForDelivery%>,<%=orderDelivered%>,<%=orderCancelled%>],
+            data: ['<%=orderPending%>','<%=orderShipped%>','<%=orderOutForDelivery%>','<%=orderDelivered%>','<%=orderCancelled%>'],
           //  borderWidth: 1
           }]
         }

@@ -93,7 +93,7 @@
 <!-- Cart End -->
 <script>
      
-    if(<%=CartItems.length%><1){
+    if('<%=CartItems.length%>'<1){
 
         document.getElementById('checkout').href='/products'
         document.getElementById('checkout').innerHTML='Back to shop'

@@ -52,9 +52,9 @@
     <tr> 
       <td><%=categoryData.category_name%> </td>
       <% if (categoryData.isBlocked==false) { %> 
-      <td class="text-center"><a href="block_category?id=<%=categoryData._id%>" class="btn btn-outline-primary ms-2 mt-4">List</a><a href="/admin//edit_Category?id=<%=categoryData._id%>" class="btn btn-outline-primary ms-2 mt-4">Edit</a></td>
+      <td class="text-center"><a href="block_category?id=<%=categoryData._id%>" class="btn btn-outline-primary ms-2 mt-4">List</a><a href="/admin/edit_Category?id=<%=categoryData._id%>" class="btn btn-outline-primary ms-2 mt-4">Edit</a></td>
       <% } else {%> 
-        <td class="text-center"><a href="block_category?id=<%=categoryData._id %>" class="btn btn-outline-primary ms-2 mt-4">Unlist</a><a href="/admin//edit_Category?id=<%=categoryData._id%>" class="btn btn-outline-primary ms-2 mt-4">Edit</a></td>
+        <td class="text-center"><a href="block_category?id=<%=categoryData._id %>" class="btn btn-outline-primary ms-2 mt-4">Unlist</a><a href="/admin/edit_Category?id=<%=categoryData._id%>" class="btn btn-outline-primary ms-2 mt-4">Edit</a></td>
       <% } %> 
 
 

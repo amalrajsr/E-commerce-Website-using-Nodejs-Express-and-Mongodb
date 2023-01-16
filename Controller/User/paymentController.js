@@ -62,10 +62,11 @@ paypal.configure({
         if(req.body.payment=='pay_pal'){
 
 
+          
             req.session.order_detail=req.body
 
             let cart= await cartCollection.findOne({user:req.cookies.id})
-            let total=cart.total_price
+            let total=cart.total_price 
             if(cart.couponDiscount){
             total=cart.total_price-cart.couponDiscount
             }
@@ -75,8 +76,8 @@ paypal.configure({
                      "payment_method": "paypal"
                  },
                  "redirect_urls": {
-                     "return_url": `http://localhost:7888/success`,
-                     "cancel_url": "http://localhost:7888/failure"
+                     "return_url": `https://bookaholic.store/success`,
+                     "cancel_url": "https://bookaholic.store/failure"
                  },
                  "transactions": [{
                      "item_list": {

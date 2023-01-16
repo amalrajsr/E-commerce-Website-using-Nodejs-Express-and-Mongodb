@@ -37,7 +37,6 @@ app.use('/admin',adminRouter)
 const staticPath=path.join(__dirname,'public')
 app.use(express.static(staticPath))
 
-
 //  Setting view Engine
 app.set('view engine', 'ejs')
 

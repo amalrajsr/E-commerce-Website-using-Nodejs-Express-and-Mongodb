@@ -31,7 +31,7 @@
     <div class="row px-xl-5">
         <div class="col-lg-5 pb-5">
             <div id="product-carousel" class="carousel slide" data-ride="carousel" onmouseleave="displayHide()">
-                <div class="carousel-inner border">
+                <div class="carousel-inner">
                     <div class="carousel-item active img-zoom-container text-center" >
                         <img class="myresult img-fluid" src="./Admin/assets/product/<%=productData[0].image%>" alt="Image" id="myimage" onmouseover="displayHover()" width="300px" height="400px">
 
@@ -64,8 +64,8 @@
                        <% if(itemInWishlist) {%> 
                         <a href="/wishlist" class=" btn mt-2 mr-2 rounded text-decoration-none border" id="wishlist-link" ><i class="fa fa-heart" > Go to wishlist</i></a>
                         <% }else { %> 
-                        <button id="wishlist-btn" class="btn  btn-sm rounded cart  mr-2 " onclick="add_to_wishlist('<%=productData[0]._id%>')">
-                            <i class="fa fa-heart rounded border"> Add to wishlist</i>
+                        <button id="wishlist-btn" class="btn  btn-sm border rounded cart  mr-2 " onclick="add_to_wishlist('<%=productData[0]._id%>')">
+                            <i class="fa fa-heart"> Add to wishlist</i>
                         </button>
                         <% } %> 
                            <!-- <input type="hidden" name="id" value="<%=//productData[0]._id%>"> -->

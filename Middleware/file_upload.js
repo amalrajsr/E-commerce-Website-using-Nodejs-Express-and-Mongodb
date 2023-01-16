@@ -2,7 +2,7 @@ const multer =require('multer')
 
 let storage=multer.diskStorage({
     destination: function(req,file,cb){
-        cb(null,'./public1/Admin/assets/category')
+        cb(null,'./public/admin/assets/category')
     },
     filename:function(req,file,cb){
         const name=file.filename+'-'+file.originalname;

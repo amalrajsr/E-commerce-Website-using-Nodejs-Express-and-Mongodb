@@ -236,7 +236,6 @@ const reportXlDownload= async(req,res)=>{
                 {header:"Payment",key:"payment_type",width:20},
                 {header:"Applied Coupon",key:"couponApplied", width:30},
                 {header:"Total Price",key:"total_price",width:20},
-                // {header:"Grand Total",key:"grant_total",width:35},
 
                 
 
