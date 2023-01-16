@@ -207,11 +207,11 @@ const otpVerify = async (req, res) => {
     userData=req.session.userData
    
     if(req.session.otp==false){
-      res.redirect("otp?wrong=OTP Expired");
+      res.redirect("/otp?wrong=OTP Expired");
     }
     else if(req.session.otp!=userOTP){
 
-      res.redirect("otp?wrong=OTP Invalid");
+      res.redirect("/otp?wrong=OTP Invalid");
 
     }
     else{
