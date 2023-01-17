@@ -152,7 +152,7 @@ async function reportPdfDownload(req,res){
         let option={
 
             format:'A4',
-            width:600,
+            width:800,
             height:600
         }
         const filePath= path.resolve(__dirname,'../views/Admin/sales_report_pdf.ejs')
