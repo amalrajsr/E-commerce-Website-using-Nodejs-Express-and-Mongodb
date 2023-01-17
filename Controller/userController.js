@@ -279,7 +279,7 @@ async function resend_otp(req,res){
 
 const forgot_pass_email_view = (req, res) => {
   try {
-    res.render("../views/user1/Login/forgot_pass_email");
+    res.render("../views/User1/Login/forgot_pass_email");
   } catch (error) {
     console.log(error);
     res.redirect('/error')
