@@ -302,8 +302,8 @@ const order_invoice= async(req,res)=>{
     let option={
 
         format:'A4',
-        width:400,
-        height:400
+        width:600,
+        height:600
     }
     const filePath=path.resolve(__dirname,'../../views/User1/Profile/pdf_order.ejs')
     const htmlString=fs.readFileSync(filePath).toString()
