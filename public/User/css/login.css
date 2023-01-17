@@ -1,4 +1,14 @@
 
+/* ----------------My editing-------------- */
+
+/* .signin-image{
+
+  background: url('/User/img/login-div.jpg')50%50%;
+
+} */
+
+/* ----------------My editing ends---------- */
+
 .container{
   width: 800px;
   margin: auto;
@@ -6,6 +16,7 @@
   overflow: hidden;
   overflow-x: hidden;
  } 
+
 
 
 /* @extend display-flex; */
@@ -206,9 +217,14 @@ body {
 font-size: 13px;
 line-height: 1.8;
 color: #222;
-background: #f8f8f8;
+/* background: #f8f8f8; */
+background: url('/User/img/login-bg.jpg') 50%50%;
+ background-size: cover;
+  /* filter: blur(8px);
+  -webkit-filter: blur(8px); */
 font-weight: 400;
 font-family: Poppins; }
+
 
 .container {
 width: 900px;
@@ -464,7 +480,7 @@ transform: translateY(0);
 font-size: 18px; }
 
 .signin-content {
-padding-top: 67px;
+padding-top: 30px;
 padding-bottom: 87px; }
 
 .social-login {

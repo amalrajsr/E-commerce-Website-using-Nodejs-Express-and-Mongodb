@@ -309,15 +309,15 @@ const forgot_pass_email = async (req, res) => {
         if (error) {
           console.log(error);
           
-          res.redirect("reset");
+          res.redirect("/reset");
         } else {
           console.log("Reset Password otp send successfully");
           console.log(nodemailer.MAIL_SETTINGS.otp)
-          res.redirect("reset/otp");
+          res.redirect("/reset/otp");
         }
       });
     } else {
-      res.redirect("reset/otp");
+      res.redirect("/reset/otp");
     }
   } catch (error) {
     console.log(error);

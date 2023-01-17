@@ -54,7 +54,7 @@
             <h3 class="font-weight-semi-bold"><%=productData[0].name  %> </h3>
             
             <h3 class="font-weight-semi-bold mb-4">₹<%=productData[0].product_price%> </h3>
-            <div id="myresult" class="img-zoom-result" ></div>
+          <div class="d-none d-lg-block">  <div id="myresult" class="img-zoom-result" ></div></div>
             <p class="mb-4"><%=productData[0].description%> </p>
            
            
@@ -95,9 +95,9 @@
             <div class="owl-carousel related-carousel">
                 <% if(relatedProducts){ %> 
                 <%relatedProducts.forEach(function(related){  %> 
-                <div class="card product-item border-0">
-                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <a href="/product_view?id=<%=related._id%>">  <img class="img-fluid w-75" src="./Admin/assets/product/<%=related.image%>" alt="product-image"></a>
+                <div class="card product-item border-0 ">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0 ">
+                        <a href="/product_view?id=<%=related._id%>" class="text-center">  <img class="img-fluid w-75 mx-auto" src="./Admin/assets/product/<%=related.image%>" alt="product-image"></a>
                     </div>
                     <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                         <h6 class="text-truncate mb-3"><%=related.name%> </h6>

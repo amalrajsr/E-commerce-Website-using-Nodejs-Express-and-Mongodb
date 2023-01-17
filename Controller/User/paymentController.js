@@ -57,7 +57,6 @@ paypal.configure({
     try{
 
 
-      let successid=Math.floor(1000000+Math.random()*9000000)
          req.session.order_detail=req.body
         if(req.body.payment=='pay_pal'){
 
