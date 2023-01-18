@@ -1,22 +1,24 @@
 <%-include('./partial/header.ejs')%>  
-<div class="d-flex justify-content-between">
+<div class="container">
    
     
     
 
-<div class="form-popup" id="myForm" >
-  <form action="/admin/add_category" class="form-container" method="POST">
+<div class="row" id="myForm" >
+  <form action="/admin/add_category" class="border col-lg-6 mx-auto my-5" method="POST">
 
     <%if(locals.wrong) { %> 
    <p> <%=locals.wrong %> </p>
    <% } %> 
 
-    <label for="category" class="text-center"><b>Category</b></label>
-    <input type="text" placeholder="Enter Category Name" name="category" required>
+   <div  class="text-center"> <label for="category" class="my-3 fw-bold" style="font-size: 1.4rem;">Category</label></div> 
+    <input type="text" placeholder="Enter Category Name" class="form-control" name="category" required>
     <br><br>
      <div class="text-center">
-      <input type="submit" name="submit"  class="btn  btn-outline-primary btn-md" >      
+      <input type="submit" name="submit"  class="btn btn-outline-primary btn-md" >      
      </div>
      <a href="/admin/category">Back</a>
 </form>
+</div>
+</div>
 <%-include('./partial/footer.ejs')%>  
