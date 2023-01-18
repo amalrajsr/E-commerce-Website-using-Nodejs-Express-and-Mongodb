@@ -201,7 +201,7 @@ const reportXlDownload= async(req,res)=>{
         let start= new Date (salesDate.from)
         let end= new Date (salesDate.to)
         
-    const total_price=await orderCollection.aggregate([   { 
+    const grand_total_price=await orderCollection.aggregate([   { 
         $match: { 
             $and: [
                 { DeliveredDate: { $gte:start } },
@@ -209,7 +209,8 @@ const reportXlDownload= async(req,res)=>{
             ]
         } 
     },{$group:{_id:null,total:{$sum:'$total_price'}}}])
-
+     
+    console.log(grand_total_price);
     const orderData= await orderCollection.aggregate([
         { 
             $match: { 
@@ -233,19 +234,20 @@ const reportXlDownload= async(req,res)=>{
             worksheet.columns=[
                 {header:"S_no",key:"s_no"},
                 {header:"Date",key:"placedDate",width:20},
+                {header:"Order id",key:"_id",width:30},
                 {header:"Name",key:"user",width:20}, 
                 {header:"Quantity",key:"quantity",width:20},            
                 {header:"Payment",key:"payment_type",width:20},
                 {header:"Applied Coupon",key:"couponApplied", width:30},
                 {header:"Total Price",key:"total_price",width:20},
+                {header:"Grand_total",key:"grand_total",width:20}
 
-                
-
+            
 
              ]
 
-             orderData.forEach(function(order){
-                 
+             orderData.forEach(function(order,i){
+                 let length=orderData.length
                 let date= order.DeliveredDate
                 let isoString = date.toISOString()
                 let newDate = isoString.split('T')[0]
@@ -253,10 +255,19 @@ const reportXlDownload= async(req,res)=>{
                 order.user=order.user.name
                 order.placedDate=newDate
                 order.quantity=order.order_details.product.length
+                if(i==length-1){
+               
+                    order.grand_total=grand_total_price[0].total
+                }
                 worksheet.addRow(order)
                 counter++
+
              })
- 
+
+           let grand_total={Grand_total:grand_total_price[0].total}
+         
+             worksheet.addRow(grand_total)
+            
              worksheet.getRow(1).eachCell((cell)=>{
                 cell.font={bold:true}
              })

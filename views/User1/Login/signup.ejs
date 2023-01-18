@@ -29,22 +29,22 @@
                            
                             <div class="form-group">   
                                 <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="name" id="name" placeholder="Your Name" />
+                                <input type="text" name="name" id="name" placeholder="Your Name"  required/>
                                 <span id="usererror" name="usererror" class="text-danger font-weight-bold"></span>
                             </div>
                             <div class="form-group">
                                 <label for="email"><i class="zmdi zmdi-email"></i></label>
-                                <input type="email" name="email" id="email" placeholder="Your Email" />
+                                <input type="email" name="email" id="email" placeholder="Your Email" required/>
                                 <span id="emailerror" class="text-danger font-weight-bold"></span>
                             </div>
                             <div class="form-group">
                                 <label for="pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="password" id="password" class="pswrd" placeholder="Password" accept='/^[a-zA-Z0-9!@#$%^&*]{6,16}$/'/>
+                                <input type="password" name="password" id="password" class="pswrd" placeholder="Password" accept='/^[a-zA-Z0-9!@#$%^&*]{6,16}$/' required/>
                                 <span id="passworderror" class="text-danger font-weight-bold"></span>
                             </div>
                             <div class="form-group">
                                 <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-                                <input type="password" name="re_password" min="4"  class="pswrd" id="re_pass" placeholder="Repeat your password"/>
+                                <input type="password" name="re_password" min="4"  class="pswrd" id="re_pass" placeholder="Repeat your password" required/>
                                
                             </div>
                             <div class="form-group">
@@ -73,70 +73,70 @@
 //   $(document).ready(function() {
 
 
- let nameValid= false
-let emailValid=false
-let passValid=false
+//  let nameValid= false
+// let emailValid=false
+// let passValid=false
 
-$("#name").keyup(function(){
-    let name=$('#name').val()
-    if(name==''){
-        $("#usererror").html('name cannot be empty')
+// $("#name").keyup(function(){
+//     let name=$('#name').val()
+//     if(name==''){
+//         $("#usererror").html('name cannot be empty')
         
-    }else{
-        $("#usererror").html('')
-         nameValid=true
+//     }else{
+//         $("#usererror").html('')
+//          nameValid=true
 
-    }
-})
+//     }
+// })
 
-$("#email").keyup(function(){
-    let email= $("#email").val()
-    let  emailRegex = /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/gm
-    if(email==''){
+// $("#email").keyup(function(){
+//     let email= $("#email").val()
+//     let  emailRegex = /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/gm
+//     if(email==''){
 
-        $('#emailerror').html('Email cannot be empty')
+//         $('#emailerror').html('Email cannot be empty')
 
-    }else if(!emailRegex.test(email)){
+//     }else if(!emailRegex.test(email)){
     
-        $('#emailerror').html('Invalid email')
+//         $('#emailerror').html('Invalid email')
 
-    }else{
-        $('#emailerror').html('')
-        emailValid=true
+//     }else{
+//         $('#emailerror').html('')
+//         emailValid=true
 
-    }
-})
+//     }
+// })
 
-$('#password').keyup(function(){
+// $('#password').keyup(function(){
 
-let password=$('#password').val()
-if(password==''){
+// let password=$('#password').val()
+// if(password==''){
 
-    $('#passworderror').html('password cannot be empty')
-}else if(password.length<6){
+//     $('#passworderror').html('password cannot be empty')
+// }else if(password.length<6){
 
-    $('#passworderror').html('Atleast 6 characters needed')
-}else{
-    $('#passworderror').html('')
-    passValid=true
-}
+//     $('#passworderror').html('Atleast 6 characters needed')
+// }else{
+//     $('#passworderror').html('')
+//     passValid=true
+// }
 
-})
-
-
+// })
 
 
-$("#signup").submit(function(){
+
+
+// $("#signup").submit(function(){
     
-    if(nameValid==true &&emailValid==true &&passValid==true){
-        alert(1)
-    $("#signup").prop('disabled', false)
-    }else{
-       alert(2)
-        $("#signup").prop('disabled',true)
+//     if(nameValid==true &&emailValid==true &&passValid==true){
+//         alert(1)
+//     $("#signup").prop('disabled', false)
+//     }else{
+//        alert(2)
+//         $("#signup").prop('disabled',true)
 
-    }
-})
+//     }
+// })
 
 // })
 

@@ -54,7 +54,7 @@ const product_page= async(req,res)=>{
 
         let userStatus = await userActive(req.cookies.jwt, req.cookies.id);
         let cartWishlist= await cartAndWishlist(req.cookies.id)
-       
+      
         let search= req.query.search||'' 
         let Sort,productData,filter
         let count=false
@@ -98,7 +98,8 @@ const product_page= async(req,res)=>{
     
     {$and:[
         {name:{$regex:'^'+search+'.*',$options:'i'}},
-        { isDeleted: false }
+        { isDeleted: false },
+        
           ],}
  ).sort(Sort).limit(limit).skip((page -1)*limit).find(filter).exec()
     
