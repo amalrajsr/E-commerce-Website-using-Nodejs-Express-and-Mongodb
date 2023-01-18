@@ -6,7 +6,7 @@ const cartCollection=require('../../Model/cartModel')
 const coupon=async(req,res)=>{
 
     try{
-        let message='Invalid Coupon',discount=null,couponId=null,total=null
+        let message='Invalid coupon',discount=null,couponId=null,total=null
         let coupon=req.body.coupon.toUpperCase()
         let cart= await cartCollection.findOne({user:req.cookies.id},{total_price:1,_id:0})
         let couponExists= await couponCollection.find({name:coupon})
