@@ -35,7 +35,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="email"><i class="zmdi zmdi-email"></i></label>
-                                <input type="email" name="email" id="email" placeholder="Your Email" required/>
+                                <input type="email" name="email" id="email" placeholder="Your Email"/>
                                 <span id="emailerror" class="text-danger font-weight-bold"></span>
                             </div>
                             <div class="form-group">
@@ -71,7 +71,47 @@
 <script>
   
     
+  $(document).ready(function() { 
 
+let valid= true
+$("#name").keyup(function(){
+    let name=$('#name').val()
+    if(name===''){
+        $("#usererror").val('name cannot be empty')
+        valid=false
+    }else{
+        $("#usererror").val('')
+         valid=true
+    }
+})
+
+$("#email").keyup(function(){
+
+    let email= $("#email").val()
+    let  emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    if(email==''){
+
+        $('#emailerror').val('email cannot be empty')
+        valid=false
+
+    }else if(!email.test(emailRegex)){
+        $('#emailerror').val('email should contain @ and .')
+        valid=false
+
+    }else{
+
+        valid=true
+    }
+
+
+    if(valid){
+
+$("#signup").removeAttr('disabled')        
+    }
+
+})
+
+  })
         
    
     

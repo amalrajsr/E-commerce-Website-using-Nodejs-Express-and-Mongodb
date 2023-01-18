@@ -69,7 +69,7 @@ const isActive= (req,res,next)=>{
 //---------------------------------User Side-----------------------------------
 
 
-// Redirect to login if jwt doesnt exists---------
+// Redirect to login if jwt doesn't exists---------
 const isUserLogin= (req,res,next)=>{
 
     try{
@@ -96,6 +96,8 @@ else{
         console.log(error)
     }
 }
+
+
 
 
 //---------------------------------------------- redirect to homepage if jwt exists---------------- not to show otp/login page

@@ -81,12 +81,13 @@ const cart = async (req, res) => {
 
   try {
 
+
+
     let productQty
     const product = await productCollection.findById({ _id: req.body.id })
     const user = await userCollection.findById({ _id: req.cookies.id })
     const cartExists = await cartCollection.find({ user: req.cookies.id })
     const productExists = await cartCollection.find({ $and: [{ "cart_items.product": product._id }, { user: user._id }] })
-
 
    
 
@@ -114,21 +115,6 @@ const cart = async (req, res) => {
 
       } else {
 
-
-        // const qtyChck = await cartCollection.aggregate([{ $match: { user: mongoose.Types.ObjectId(req.cookies.id) } },
-        //   { $unwind: "$cart_items" },
-        //   { $match: { "cart_items.product": mongoose.Types.ObjectId(product._id) } },
-        //   ])
-          // if(qtyChck.length>0){
-          //    productQty = qtyChck[0].cart_items.quantity
-          // }
-
-        // if (productQty >= product.stock) {
-        //    console.log('out of stock');
-        //   res.json({
-        //     outOfStock:true
-        //   })
-        // } else {
           const userCart = await cartCollection.findOne({ user: req.cookies.id })
           let updatedTotalPrice = userCart.total_price + product.product_price
 
@@ -138,7 +124,7 @@ const cart = async (req, res) => {
             success: true
           })
 
-        // }
+      
 
 
       }
