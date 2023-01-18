@@ -13,12 +13,11 @@
 
 <!-- -------------------------------------------Search Bar----------------------------------------------------- -->
   
-  <div class="container d-flex justify-content-between">
-   
-    <a href="/admin/add_Category" class="open-button btn btn-outline-success" >Add Category</a>
-    <form class="d-inline">
+  <div class="container row justify-content-between">
+    <a href="/admin/add_Category" class="open-button btn btn-outline-success col-5 col-lg-2 my-2 mx-auto d-block d-lg-none" >Add Category</a>
+    <a href="/admin/add_Category" class="open-button btn btn-outline-success col-5 col-lg-2 my-2 d-none d-lg-block" >Add Category</a>
+    <form class="d-inline d-flex col-7 col-lg-6 my-2 mx-auto">
      <input type="text" name="search" id="" placeholder=" search category">
-      
      <% if(value==true) {%> 
       <button class="btn btn-outline-dark btn-sm" value="search" >Back</button>
       <% }else{ %>

@@ -16,13 +16,12 @@ margin-left: 10px;
 
 
 <div class="container d-flex justify-content-between add-btn-div">
-  <a href="/admin/coupon_add" class="open-button btn btn-outline-success"
-    >Add Coupon </a
-  >
-  <form class="d-inline">
-    <input type="text" name="search" id="" placeholder=" search coupon" />
 
-    <!-- <button class="btn btn-outline-dark btn-sm" value="search" >Back</button> -->
+  <a href="/admin/coupon_add" class="open-button btn btn-outline-success col-5 col-lg-2 my-2 mx-auto d-block d-lg-none" >Add Coupon</a>
+  <a href="/admin/coupon_add" class="open-button btn btn-outline-success col-5 col-lg-2 my-2 d-none d-lg-block" >Add Coupon</a>
+  <form class="d-inline d-flex col-7 col-lg-6 my-2 mx-auto">
+   <input type="text" name="search" id="" placeholder=" search category">
+
     <% if(locals.value==false) {%> 
     <button class="btn btn-outline-dark btn-sm" value="search">search</button>
     <% }else{ %> 
@@ -30,6 +29,8 @@ margin-left: 10px;
      <% } %> 
   </form>
 </div>
+
+
 <div class="container mt-5">
   <% if(coupon_list!=null) {%> 
   <table id="example" class="table table-bordered">
