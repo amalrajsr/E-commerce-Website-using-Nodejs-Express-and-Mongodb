@@ -70,75 +70,81 @@
 <script>
   
     
-//   $(document).ready(function() {
+  $(document).ready(function() {
 
 
-//  let nameValid= false
-// let emailValid=false
-// let passValid=false
+ let nameValid= false
+let emailValid=false
+let passValid=false
 
-// $("#name").keyup(function(){
-//     let name=$('#name').val()
-//     if(name==''){
-//         $("#usererror").html('name cannot be empty')
+$("#name").keyup(function(){
+    let name=$('#name').val()
+    if(name==''){
+        $("#usererror").html('name cannot be empty')
         
-//     }else{
-//         $("#usererror").html('')
-//          nameValid=true
+    }else{
+        $("#usererror").html('')
+         nameValid=true
 
-//     }
-// })
+    }
+      if(nameValid==true &&emailValid==true &&passValid==true){
+    $("#signup").prop('disabled', false)
+    }else{
+        $("#signup").prop('disabled',true)
 
-// $("#email").keyup(function(){
-//     let email= $("#email").val()
-//     let  emailRegex = /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/gm
-//     if(email==''){
+    }
+})
 
-//         $('#emailerror').html('Email cannot be empty')
+$("#email").keyup(function(){
+    let email= $("#email").val()
+    let  emailRegex = /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/gm
+    if(email==''){
 
-//     }else if(!emailRegex.test(email)){
+        $('#emailerror').html('Email cannot be empty')
+
+    }else if(!emailRegex.test(email)){
     
-//         $('#emailerror').html('Invalid email')
+        $('#emailerror').html('Invalid email')
 
-//     }else{
-//         $('#emailerror').html('')
-//         emailValid=true
+    }else{
+        $('#emailerror').html('')
+        emailValid=true
 
-//     }
-// })
+    }
+    if(nameValid==true &&emailValid==true &&passValid==true){
+    $("#signup").prop('disabled', false)
+    }else{
+        $("#signup").prop('disabled',true)
 
-// $('#password').keyup(function(){
+    }
+})
 
-// let password=$('#password').val()
-// if(password==''){
+$('#password').keyup(function(){
 
-//     $('#passworderror').html('password cannot be empty')
-// }else if(password.length<6){
+let password=$('#password').val()
+if(password==''){
 
-//     $('#passworderror').html('Atleast 6 characters needed')
-// }else{
-//     $('#passworderror').html('')
-//     passValid=true
-// }
+    $('#passworderror').html('password cannot be empty')
+}else if(password.length<6){
 
-// })
+    $('#passworderror').html('Atleast 6 characters needed')
+}else{
+    $('#passworderror').html('')
+    passValid=true
+}
+
+if(nameValid==true &&emailValid==true &&passValid==true){
+    $("#signup").prop('disabled', false)
+    }else{
+       
+        $("#signup").prop('disabled',true)
+
+    }
+
+})
 
 
-
-
-// $("#signup").submit(function(){
-    
-//     if(nameValid==true &&emailValid==true &&passValid==true){
-//         alert(1)
-//     $("#signup").prop('disabled', false)
-//     }else{
-//        alert(2)
-//         $("#signup").prop('disabled',true)
-
-//     }
-// })
-
-// })
+})
 
 
         
