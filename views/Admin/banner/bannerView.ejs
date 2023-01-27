@@ -1,0 +1,30 @@
+<%-include('../partial/header.ejs')%>
+
+
+<div class="container d-flex justify-content-between add-btn-div my-5">
+
+    <a href="/admin/add_banner" class="open-button btn btn-outline-success col-5 col-lg-2 my-2 mx-auto d-block d-lg-none" >Add Banner</a>
+    <a href="/admin/add_banner" class="open-button btn btn-outline-success col-5 col-lg-2 my-2 d-none d-lg-block" >Add Banner</a>
+   
+  </div>
+  <div class="container">
+<table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Message</th>
+        <th scope="col">Image</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+        <%  if(bannerData.length>0) {%> 
+            <% bannerData.forEach(function(banner){ %> 
+      <tr>
+        <td><%=banner.text%></td>
+        <td><img src="/admin/assets/banner/<%=banner.image%>" alt="banner-image" width="100" height="100"></td>   
+      </tr>
+      <% })} %> 
+    </tbody>
+  </table>
+</div>
+  <%-include('../partial/footer.ejs')%>

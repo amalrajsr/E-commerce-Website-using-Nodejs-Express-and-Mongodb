@@ -23,7 +23,7 @@
                 <div class="mt-3"> <a href="/" class="text-dark"><i class="fa fa-solid fa-house fa-2xl"></i></a></div>
                 <div class="signup-content">
                     <div class="signup-form">
-                        <%=locals.message %> 
+                       <span class="text-danger"><%=locals.message %> </span> 
                         <h2 class="form-title">Sign up</h2>
                         <form method="POST" action="/signup" class="register-form" id="register-form"> 
                            
@@ -97,7 +97,7 @@ $("#name").keyup(function(){
 
 $("#email").keyup(function(){
     let email= $("#email").val()
-    let  emailRegex = /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/gm
+    let  emailRegex =/^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/gm
     if(email==''){
 
         $('#emailerror').html('Email cannot be empty')

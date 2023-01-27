@@ -75,8 +75,8 @@ paypal.configure({
                      "payment_method": "paypal"
                  },
                  "redirect_urls": {
-                     "return_url": `https://bookaholic.store/success`,
-                     "cancel_url": "https://bookaholic.store/failure"
+                     "return_url": `${process.env.PAYPAL_SUCCESS_URL}`,
+                     "cancel_url": `${process.env.PAYPAL_SUCCESS_URL}`
                  },
                  "transactions": [{
                      "item_list": {
@@ -164,7 +164,6 @@ async function successPage(req,res){
         }
 
       
-
 
         if(orderDetail.couponId){
 

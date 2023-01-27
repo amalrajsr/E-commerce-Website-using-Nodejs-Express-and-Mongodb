@@ -3,6 +3,7 @@ const admin_route=express()
 const adminController=require('../Controller/adminController')
 const couponController=require('../Controller/Admin/couponController')
 const orderController=require('../Controller/Admin/orderController')
+const bannerController=require('../Controller/Admin/bannerController')
  const uploadFile = require('../Middleware/file_upload')
  const uploadProduct=require('../Middleware/productUpload')
  const requireAuth=require('../Middleware/Auth/Auth')
@@ -55,5 +56,10 @@ admin_route.get('/coupon_block',requireAuth.isLogin,couponController.block_unblo
 //Admin Order Management
 admin_route.get('/order',requireAuth.isLogin,orderController.order_page)
 admin_route.post('/order',requireAuth.isLogin,orderController.order_status_edit)
+
+//Admin Banner Mangement
+admin_route.get('/banner',requireAuth.isLogin,bannerController.bannerView)
+admin_route.get('/add_banner',requireAuth.isLogin,bannerController.addBannerView)
+admin_route.post('/add_banner',requireAuth.isLogin,uploadFile.single('image'),bannerController.addBanner)
 
 module.exports=admin_route

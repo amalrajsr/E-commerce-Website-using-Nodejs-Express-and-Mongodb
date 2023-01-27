@@ -6,8 +6,7 @@ const productCollection = require('../Model/produtModel')
 const jwt= require('../Utilities/jwt')
 const mongoose=require('mongoose')
 const exceljs= require('exceljs')
-// const sharp=require('sharp')
-// html to pdf dependencies
+
 const ejs= require('ejs')
 const pdf=require('html-pdf')
 const fs= require('fs')
@@ -152,8 +151,7 @@ async function reportPdfDownload(req,res){
         let option={
 
             format:'letter',
-            // width:800,
-            // height:600
+           
         }
         const filePath= path.resolve(__dirname,'../views/Admin/sales_report_pdf.ejs')
         const htmlString=fs.readFileSync(filePath).toString()
@@ -457,7 +455,6 @@ const addCategory = async (req, res) => {
             const category = new categoryCollection({
 
                 category_name: category_Upper,
-                // image: req.file.filename
             })
 
             category.save()
@@ -631,7 +628,6 @@ const edit_product_view = async (req, res) => {
 
         let product_id=req.query.id
         let categoryData = await categoryCollection.find({ isBlocked: false })
-    //    let productData = await productCollection.findById({ _id: product_id})
 
 
      const productData = await productCollection.aggregate([

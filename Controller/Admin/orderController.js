@@ -17,6 +17,7 @@ const order_page= async(req,res)=>{
                                        {$unwind:"$user"},
                                        {$sort:{"placedDate":-1}}
                                       ])
+
                                       
   res.render('../views/Admin/order',{orderData,productData})
      

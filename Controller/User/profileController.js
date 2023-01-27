@@ -96,7 +96,6 @@ const address_view= async (req,res)=>{
     let address=userAddress.address
     
    res.render('../views/User1/Profile/address',{userStatus,cartWishlist,address})
-  // res.render('../views/User/Profile/2edit')
 
 
   }catch(error){
@@ -232,7 +231,6 @@ const profile_add_edit_checkout= async(req,res)=>{
     const user= await userCollection.aggregate([{$match:{_id:mongoose.Types.ObjectId(req.cookies.id)}},
                                               {$unwind:"$address"},
                                               {$match:{"address._id":mongoose.Types.ObjectId(address_id)}},
-                                              // {$project:{address:1}}
     ])
    
    res.json({
@@ -276,6 +274,7 @@ const single_order= async(req,res)=>{
     {$lookup:{from:'products',localField:"order_details.product",foreignField:"_id",as:"product"}},
   ])
 
+  console.log(orderData);
   res.render('../views/User1/Profile/single_order_view.ejs',{orderData,cartWishlist,userStatus})
 
   }catch(error){

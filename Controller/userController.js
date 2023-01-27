@@ -173,16 +173,6 @@ const register = async (req, res) => {
         req.session.destroy()
       },300000)
 
-    //Saving OTP to Database
-    // const userOtp= await new otpCollection({
-
-    //   user_email:email,
-    //   otp:nodemailer.MAIL_SETTINGS.otp,
-    //   createdAt:Date.now(),
-    //   expiresAt:Date.now()+60000,
-    // })
-
-    // userOtp.save()
     
     }
   } catch (error) {
